@@ -1,0 +1,65 @@
+﻿using Aplication.Interfaces.Repository;
+using Application.DTOs.Availibility;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Repository
+{
+    public class ProfessionalRepository : IProfessionalRepository
+    {
+        private ApplicationDbContext _context;
+        public ProfessionalRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public async Task<Professional> AddAsync(Professional newProfessional)
+        {
+            _context.Professionals.AddAsync(newProfessional);
+            await _context.SaveChangesAsync();
+            return newProfessional;
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            Professional professional = await _context.Professionals.FindAsync(id);
+            if (professional == null)
+            {
+                _context.Professionals.Remove(professional);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Professional> GetByIdAsync(Guid id)
+        {
+            return await _context.Professionals.FindAsync(id);
+        }
+
+        public async Task<Professional> GetByMailAsync(string email)
+        {
+            return await _context.Professionals.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
+        public async Task<Professional> UpdateAsync(Guid id, Professional updatedProfessional)
+        {
+            Professional professional = await _context.Professionals.FindAsync(id);
+            if (professional != null)
+            {
+                professional.Update(updatedProfessional);
+                await _context.SaveChangesAsync();
+            }
+            return professional;
+        }
+
+        public async void UpdateAvailabilityAsync(Guid professionalId, List<AvailabilitySlot> slots)
+        {
+            Professional professional = await _context.Professionals.FindAsync(professionalId);
+            professional.UpdateAvailability(slots);
+
+        }
+    }
+}
