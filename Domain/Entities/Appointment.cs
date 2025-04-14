@@ -33,12 +33,12 @@ namespace Domain.Entities
                 Status = other.Status;
         }
 
-        public void AddCustomer(Customer customer)
+        public void SetCustomer(Customer customer)
         {
             Customer = customer;
         }
 
-        public void AddProfessional(Professional professional)
+        public void SetProfessional(Professional professional)
         {
             Professional = professional;
         }

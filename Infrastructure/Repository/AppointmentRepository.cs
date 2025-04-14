@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repository;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Infrastructure.Repository
         }
         public async Task<Appointment> AddAsync(Appointment newAppointment)
         {
-            _context.Appointments.Add(newAppointment);
+            await _context.Appointments.AddAsync(newAppointment);
             await _context.SaveChangesAsync();
             return newAppointment;
         }
@@ -37,7 +38,10 @@ namespace Infrastructure.Repository
 
         public async Task<Appointment> GetByIdAsync(Guid id)
         {
-            return await _context.Appointments.FindAsync(id);
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.Professional)
+                .FirstOrDefaultAsync(a => a.Id.Equals(id));
         }
 
 

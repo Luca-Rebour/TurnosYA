@@ -19,7 +19,7 @@ namespace Infrastructure.Repository
         }
         public async Task<Professional> AddAsync(Professional newProfessional)
         {
-            _context.Professionals.AddAsync(newProfessional);
+            await _context.Professionals.AddAsync(newProfessional);
             await _context.SaveChangesAsync();
             return newProfessional;
         }

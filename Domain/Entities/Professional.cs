@@ -23,7 +23,7 @@ namespace Domain.Entities
 
         public void Update(Professional other)
         {
-            throw new NotImplementedException();
+            UpdateUserProfessional(other);
         }
         
 

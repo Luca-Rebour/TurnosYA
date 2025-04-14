@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
         }
         public async Task<Customer> AddAsync(Customer newCustomer)
         {
-            _context.Customers.AddAsync(newCustomer);
+            await _context.Customers.AddAsync(newCustomer);
             await _context.SaveChangesAsync();
             return newCustomer; 
         }

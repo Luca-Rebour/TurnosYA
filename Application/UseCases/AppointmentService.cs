@@ -30,8 +30,8 @@ namespace Application.UseCases
             Appointment appointment = _mapper.Map<Appointment>(appointmentDTO);
             Customer customer = await _customerRepository.GetByIdAsync(appointmentDTO.CustomerId);
             Professional professional = await _professionalRepository.GetByIdAsync(appointmentDTO.ProfessionalId);
-            appointment.AddCustomer(customer);
-            appointment.AddProfessional(professional);
+            appointment.SetCustomer(customer);
+            appointment.SetProfessional(professional);
             await _repository.AddAsync(appointment);
             return _mapper.Map<AppointmentDTO>(appointment);
         }

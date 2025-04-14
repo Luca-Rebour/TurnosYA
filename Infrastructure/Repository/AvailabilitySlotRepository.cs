@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
         }
         public async Task<AvailabilitySlot> AddAsync(AvailabilitySlot newSlot)
         {
-            _context.AvailabilitySlots.Add(newSlot);
+            await _context.AvailabilitySlots.AddAsync(newSlot);
             await _context.SaveChangesAsync();
             return newSlot;
 

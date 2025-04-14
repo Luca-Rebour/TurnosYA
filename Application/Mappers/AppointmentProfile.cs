@@ -17,6 +17,7 @@ namespace Application.Mappers
             CreateMap<AppointmentDTO, Appointment>();
             CreateMap<Appointment, AppointmentDTO>();
             CreateMap<CreateAppointmentDTO, Appointment>();
+            CreateMap<UpdateAppointmentDTO, Appointment>();
 
         }
     }
