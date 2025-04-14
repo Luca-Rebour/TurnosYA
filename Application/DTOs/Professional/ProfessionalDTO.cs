@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.DTOs.Availibility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Application.DTOs.Professional
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime BirthDate { get; set; }
+        public ICollection<AvailabilitySlotDTO> Availability { get; set; }
     }
 }

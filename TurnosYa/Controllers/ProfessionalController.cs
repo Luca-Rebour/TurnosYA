@@ -1,6 +1,9 @@
 ﻿using Application.DTOs.Appointment;
+using Application.DTOs.Availability;
+using Application.DTOs.Availibility;
 using Application.DTOs.Professional;
 using Application.Interfaces.Services;
+using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,5 +39,6 @@ namespace Api.Controllers
             ProfessionalDTO result = await _service.Update(id, updatedProfessional);
             return Ok(result);
         }
+
     }
 }

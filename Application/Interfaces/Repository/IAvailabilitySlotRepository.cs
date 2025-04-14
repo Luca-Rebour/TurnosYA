@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Availibility;
+﻿using Application.DTOs.Availability;
+using Application.DTOs.Availibility;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

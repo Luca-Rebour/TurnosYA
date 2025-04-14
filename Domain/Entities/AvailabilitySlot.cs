@@ -16,12 +16,20 @@ namespace Domain.Entities
         public Guid ProfessionalId { get; private set; }
         public Professional Professional { get; private set; }
         public AvailabilityStatus SlotStatus { get; private set; }
-        public AvailabilitySlot() { }
+        public AvailabilitySlot() 
+        { 
+            Id = Guid.NewGuid();
+        }
         public void MarkAsUnavailable() => SlotStatus = AvailabilityStatus.Booked;
 
         public void Update(AvailabilitySlot other)
         {
             SlotStatus = other.SlotStatus;
+        }
+
+        public void SetProfessional(Professional professional)
+        {
+            Professional = professional;
         }
 
 

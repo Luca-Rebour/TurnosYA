@@ -9,6 +9,6 @@ namespace Application.DTOs.Availibility
 {
     public class UpdateAvailabilitySlotDTO
     {
-        public AvailabilityStatus Status {  get; set; }
+        public AvailabilityStatus SlotStatus {  get; set; }
     }
 }

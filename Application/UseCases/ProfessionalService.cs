@@ -1,4 +1,5 @@
 ﻿using Aplication.Interfaces.Repository;
+using Application.DTOs.Availibility;
 using Application.DTOs.Professional;
 using Application.Interfaces.Security;
 using Application.Interfaces.Services;
@@ -24,6 +25,8 @@ namespace Application.UseCases
             _mapper = mapper;
             _passwordHasher = passwordHasher;
         }
+
+
         public async Task<ProfessionalDTO> Create(CreateProfessionalDTO createProfessionalDTO)
         {
             string password = _passwordHasher.Hash(createProfessionalDTO.Password);

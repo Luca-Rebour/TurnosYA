@@ -36,7 +36,11 @@ namespace Infrastructure.Repository
 
         public async Task<Professional> GetByIdAsync(Guid id)
         {
-            return await _context.Professionals.FindAsync(id);
+            return  await _context.Professionals
+                .Include(p => p.Availability)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+
         }
 
         public async Task<Professional> GetByMailAsync(string email)

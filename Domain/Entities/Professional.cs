@@ -10,7 +10,7 @@ namespace Domain.Entities
 {
     public class Professional : UserProfessional, IUpdatable<Professional>
     {
-        public Professional() { }
+        public Professional():base() { }
 
         public override IEnumerable<Customer> GetCustomers()
         {
@@ -25,5 +25,7 @@ namespace Domain.Entities
         {
             throw new NotImplementedException();
         }
+        
+
     }
 }

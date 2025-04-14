@@ -9,9 +9,11 @@ namespace Application.DTOs.Availibility
 {
     public class AvailabilitySlotDTO
     {
+        public Guid Id { get; set; }
         public DayOfWeek Day { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        public AvailabilityStatus Status { get; set; }
+        public AvailabilityStatus SlotStatus { get; set; }
+        public Guid ProfessionalId { get; set; }
     }
 }

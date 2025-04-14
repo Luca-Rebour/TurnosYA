@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Appointment;
+using Application.DTOs.Availability;
 using Application.DTOs.Availibility;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +17,10 @@ namespace Application.Mappers
         {
             CreateMap<AvailabilitySlotDTO, AvailabilitySlot>();
             CreateMap<AvailabilitySlot, AvailabilitySlotDTO>();
+            CreateMap<AvailabilitySlot, CreateAvailabilitySlotDTO> ();
+            CreateMap<CreateAvailabilitySlotDTO, AvailabilitySlot>()
+            .ForMember(dest => dest.Professional, opt => opt.Ignore());
+            CreateMap<UpdateAvailabilitySlotDTO, AvailabilitySlot>();
         }
     }
 }

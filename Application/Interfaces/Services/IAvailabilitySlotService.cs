@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Availability;
 using Application.DTOs.Availibility;
+using Application.DTOs.Professional;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace Application.Interfaces.Services
 {
     public interface IAvailabilitySlotService
     {
-        Task<AvailabilitySlotDTO> Create(CreateAvailabilitySlotDTO availabilityDTO);
-        Task<AvailabilitySlotDTO> Update(Guid id, UpdateAvailabilitySlotDTO availabilityDTO);
+        Task<ProfessionalDTO> Create(CreateAvailabilitySlotDTO availabilityDTO);
+        Task<ProfessionalDTO> Update(Guid id, UpdateAvailabilitySlotDTO availabilityDTO);
         Task Delete(Guid id);
 
     }

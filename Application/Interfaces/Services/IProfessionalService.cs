@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Professional;
+﻿using Application.DTOs.Availibility;
+using Application.DTOs.Professional;
 using System;
 using System.Collections.Generic;
 using System.Linq;
