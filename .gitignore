@@ -52,3 +52,21 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+
+# Others
+*.log
+*.db
+*.DS_Store
+
+appsettings.json
+appsettings.*.json
+!appsettings.Development.json
