@@ -45,7 +45,9 @@ namespace Infrastructure.Repository
 
         public async Task<Professional> GetByMailAsync(string email)
         {
-            return await _context.Professionals.FirstOrDefaultAsync(x => x.Email == email);
+
+            Professional professional = await _context.Professionals.FirstOrDefaultAsync(x => x.Email == email);
+            return professional;
         }
 
         public async Task<Professional> UpdateAsync(Guid id, Professional updatedProfessional)

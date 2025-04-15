@@ -19,6 +19,7 @@ namespace Application.Mappers
             CreateMap<CreateCustomerDTO, Customer>();
 
             CreateMap<Customer, CustomerShortDTO>();
+            CreateMap<Customer, CustomerInternalDTO>();
             CreateMap<Professional, ProfessionalShortDTO>();
 
         }

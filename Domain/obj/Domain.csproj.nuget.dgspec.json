@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj": {}
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj": {
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\obj\\",
         "projectStyle": "PackageReference",

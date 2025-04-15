@@ -42,7 +42,9 @@ namespace Infrastructure.Repository
 
         public async Task<Customer?> GetByMailAsync(string email)
         {
-            return await _context.Customers.FirstOrDefaultAsync(x => x.Email == email);
+            Customer? customer = await _context.Customers.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+
+            return customer;
         }
 
 

@@ -13,6 +13,8 @@ namespace Application.Interfaces.Services
         Task<ProfessionalDTO> Create(CreateProfessionalDTO createProfessionalDTO);
         Task<ProfessionalDTO> Update(Guid id, UpdateProfessionalDTO updateProfessionalDTO);
         Task<ProfessionalDTO> GetById(Guid id);
+        Task<ProfessionalDTO> GetByEmail(string email);
+        Task<ProfessionalInternalDTO> GetByEmailInternal(string email);
         Task Delete(Guid id);
     }
 

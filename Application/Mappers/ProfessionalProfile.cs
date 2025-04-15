@@ -17,6 +17,7 @@ namespace Application.Mappers
             CreateMap<CreateProfessionalDTO, Professional>();
             CreateMap<Professional, ProfessionalDTO>();
             CreateMap<UpdateProfessionalDTO, Professional>();
+            CreateMap<Professional, ProfessionalInternalDTO>();
 
         }
     }

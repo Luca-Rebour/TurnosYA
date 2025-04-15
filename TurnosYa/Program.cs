@@ -9,19 +9,51 @@ using AutoMapper;
 using Aplication.Interfaces.Repository;
 using Infrastructure.Security;
 using Application.Interfaces.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TurnosYa.Api.Services;
+using Application.Interfaces.Services.Security;
+using Application.UseCases.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Leer config JWT
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+// Autenticación JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Inyeccion de dependencia del hasher
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<AuthService>();
+
+
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataConection")));
+
 
 // Inyeccion de dependencias de repositorios
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
@@ -31,6 +63,10 @@ builder.Services.AddScoped<IAvailabilitySlotRepository, AvailabilitySlotReposito
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 // Inyeccion de dependencias de servicios
+builder.Services.AddScoped<ILoginHandler, ProfessionalLoginHandler>();
+builder.Services.AddScoped<ILoginHandler, CustomerLoginHandler>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthPasswordService, AuthService>();
 builder.Services.AddScoped<IProfessionalService, ProfessionalService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
@@ -47,6 +83,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

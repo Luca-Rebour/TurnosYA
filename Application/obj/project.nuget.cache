@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FP+ywsqC4g4=",
+  "dgSpecHash": "tCUQVYqDHTI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucar\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\lucar\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
