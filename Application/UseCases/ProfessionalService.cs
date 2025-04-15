@@ -5,11 +5,7 @@ using Application.Interfaces.Security;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Exceptions;
 
 namespace Application.UseCases
 {
@@ -18,17 +14,23 @@ namespace Application.UseCases
         private readonly IProfessionalRepository _repository;
         private readonly IMapper _mapper;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserEmailValidatorService _userEmailValidatorService;
 
-        public ProfessionalService(IProfessionalRepository repository, IMapper mapper, IPasswordHasher passwordHasher)
+        public ProfessionalService(IProfessionalRepository repository, IMapper mapper, IPasswordHasher passwordHasher, IUserEmailValidatorService userEmailValidatorService)
         {
             _repository = repository;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
+            _userEmailValidatorService = userEmailValidatorService;
         }
 
 
         public async Task<ProfessionalDTO> Create(CreateProfessionalDTO createProfessionalDTO)
         {
+            if (await _userEmailValidatorService.EmailExists(createProfessionalDTO.Email))
+            {
+                throw new EmailAlreadyExistsException(createProfessionalDTO.Email);
+            }
             string password = _passwordHasher.Hash(createProfessionalDTO.Password);
 
             Professional professional = _mapper.Map<Professional>(createProfessionalDTO);
@@ -50,7 +52,7 @@ namespace Application.UseCases
 
             if (professional == null)
             {
-                throw new Exception("Profesional no encontrado");
+                throw new Exception("Professional not found");
             }
 
             return _mapper.Map<ProfessionalDTO>(professional);
@@ -94,6 +96,8 @@ namespace Application.UseCases
 
             return _mapper.Map<ProfessionalInternalDTO>(professional);
         }
+
+
 
     }
 

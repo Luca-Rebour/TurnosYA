@@ -4,28 +4,31 @@ using Application.Interfaces.Security;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Exceptions;
 
 namespace Application.UseCases
 {
     public class CustomerService : ICustomerService
     {
-        private ICustomerRepository _repository;
-        private IMapper _mapper;
-        private IPasswordHasher _passwordHasher;
-        public CustomerService(ICustomerRepository reposoitory, IMapper mapper, IPasswordHasher passwordHasher) 
+        private readonly ICustomerRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserEmailValidatorService _userEmailValidatorService;
+        public CustomerService(ICustomerRepository reposoitory, IMapper mapper, IPasswordHasher passwordHasher, IUserEmailValidatorService userEmailValidatorService) 
         { 
             _repository = reposoitory;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
+            _userEmailValidatorService = userEmailValidatorService;
         }
         public async Task<CustomerDTO> Create(CreateCustomerDTO createCustomerDTO)
         {
+
+            if (await _userEmailValidatorService.EmailExists(createCustomerDTO.Email))
+            {
+                throw new EmailAlreadyExistsException(createCustomerDTO.Email);
+            }
+
             string passwordHash = _passwordHasher.Hash(createCustomerDTO.Password);
 
             Customer newCustomer = _mapper.Map<Customer>(createCustomerDTO);
@@ -56,11 +59,18 @@ namespace Application.UseCases
             CustomerDTO customerDTO = _mapper.Map<CustomerDTO>(customer);
             return customerDTO;
         }
+        public async Task<CustomerDTO> GetByEmail(string email)
+        {
+            Customer customer = await _repository.GetByMailAsync(email);
+            CustomerDTO customerInternalDTO = _mapper.Map<CustomerDTO>(customer);
+            return customerInternalDTO;
+        }
         public async Task<CustomerInternalDTO> GetByEmailInternal(string email)
         {
             Customer customer = await _repository.GetByMailAsync(email);
             CustomerInternalDTO customerInternalDTO = _mapper.Map<CustomerInternalDTO>(customer);
             return customerInternalDTO;
         }
+
     }
 }

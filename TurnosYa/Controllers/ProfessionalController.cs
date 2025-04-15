@@ -2,6 +2,7 @@
 using Application.DTOs.Availability;
 using Application.DTOs.Availibility;
 using Application.DTOs.Professional;
+using Application.Exceptions;
 using Application.Interfaces.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -21,11 +22,19 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProfessionalDTO dto)
+        public async Task<IActionResult> Create(CreateProfessionalDTO createProfessionalDTO)
         {
-            ProfessionalDTO result = await _service.Create(dto);
-            return Ok(result);
+            try
+            {
+                ProfessionalDTO professional = await _service.Create(createProfessionalDTO);
+                return Ok(professional);
+            }
+            catch (EmailAlreadyExistsException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
