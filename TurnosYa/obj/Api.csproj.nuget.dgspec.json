@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\TurnosYa\\Api.csproj": {}
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\TurnosYa\\Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj": {
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj"
+              "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj"
               }
             }
           }
@@ -79,12 +79,12 @@
         }
       }
     },
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj": {
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\obj\\",
         "projectStyle": "PackageReference",
@@ -140,14 +140,14 @@
         }
       }
     },
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -165,11 +165,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj"
+              "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj"
               },
-              "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Domain\\Domain.csproj"
+              "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Domain\\Domain.csproj"
               }
             }
           }
@@ -234,14 +234,14 @@
         }
       }
     },
-    "C:\\Users\\lucar\\source\\repos\\TurnosYA\\TurnosYa\\Api.csproj": {
+    "C:\\Users\\lucar\\source\\repos\\TurnosYa\\TurnosYa\\Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\TurnosYa\\Api.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\TurnosYa\\Api.csproj",
         "projectName": "Api",
-        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\TurnosYa\\Api.csproj",
+        "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\TurnosYa\\Api.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\TurnosYa\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\TurnosYa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -259,11 +259,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Application\\Application.csproj"
+              "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Application\\Application.csproj"
               },
-              "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYA\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\lucar\\source\\repos\\TurnosYa\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -283,6 +283,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.4, )"

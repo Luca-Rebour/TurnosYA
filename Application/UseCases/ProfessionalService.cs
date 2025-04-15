@@ -76,6 +76,25 @@ namespace Application.UseCases
             return _mapper.Map<ProfessionalDTO>(professional);
         }
 
+        public async Task<ProfessionalDTO> GetByEmail(string email)
+        {
+            Professional professional = await _repository.GetByMailAsync(email);
+
+            if (professional == null)
+            {
+                throw new Exception("Profesional no encontrado");
+            }
+
+            return _mapper.Map<ProfessionalDTO>(professional);
+        }
+        public async Task<ProfessionalInternalDTO> GetByEmailInternal(string email)
+        {
+            Professional professional = await _repository.GetByMailAsync(email);
+
+
+            return _mapper.Map<ProfessionalInternalDTO>(professional);
+        }
+
     }
 
 }

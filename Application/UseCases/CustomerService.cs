@@ -56,5 +56,11 @@ namespace Application.UseCases
             CustomerDTO customerDTO = _mapper.Map<CustomerDTO>(customer);
             return customerDTO;
         }
+        public async Task<CustomerInternalDTO> GetByEmailInternal(string email)
+        {
+            Customer customer = await _repository.GetByMailAsync(email);
+            CustomerInternalDTO customerInternalDTO = _mapper.Map<CustomerInternalDTO>(customer);
+            return customerInternalDTO;
+        }
     }
 }

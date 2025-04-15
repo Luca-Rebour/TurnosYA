@@ -176,3 +176,4 @@ C:\Users\lucar\source\repos\TurnosYa\TurnosYa\bin\Debug\net8.0\tr\Microsoft.Code
 C:\Users\lucar\source\repos\TurnosYa\TurnosYa\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\lucar\source\repos\TurnosYa\TurnosYa\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\lucar\source\repos\TurnosYa\TurnosYa\obj\Debug\net8.0\Api.sourcelink.json
+C:\Users\lucar\source\repos\TurnosYa\TurnosYa\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
