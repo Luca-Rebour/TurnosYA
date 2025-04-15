@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Customer;
 using Application.DTOs.Professional;
+using Application.Exceptions;
 using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,17 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCustomerDTO dto)
+        public async Task<IActionResult> Create([FromBody] CreateCustomerDTO CreateCustomerDTO)
         {
-            CustomerDTO result = await _service.Create(dto);
-            return Ok(result);
+            try
+            {
+                CustomerDTO customer = await _service.Create(CreateCustomerDTO);
+                return Ok(customer);
+            }
+            catch (EmailAlreadyExistsException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
