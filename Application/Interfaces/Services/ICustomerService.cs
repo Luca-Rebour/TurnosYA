@@ -12,6 +12,7 @@ namespace Application.Interfaces.Services
         Task<CustomerDTO> Create(CreateCustomerDTO customerDTO);
         Task<CustomerDTO> Update(Guid id, UpdateCustomerDTO customerDTO);
         Task<CustomerDTO> GetById(Guid id);
+        Task<CustomerDTO> GetByEmail(string email);
         Task<CustomerInternalDTO> GetByEmailInternal(string email);
         Task Delete(Guid id);
 
