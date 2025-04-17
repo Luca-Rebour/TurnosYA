@@ -43,5 +43,15 @@ namespace Domain.Entities
             Professional = professional;
         }
 
+        public void SetStatusCancelled()
+        {
+            Status = Status.Canceled;
+        }
+
+        public void SetStatusConfirmed()
+        {
+            Status = Status.Confirmed;
+        }
+
     }
 }

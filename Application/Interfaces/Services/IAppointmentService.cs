@@ -14,6 +14,8 @@ namespace Application.Interfaces.Services
         Task<AppointmentDTO> GetById(Guid id);
         Task<AppointmentDTO> Update(Guid id, UpdateAppointmentDTO updateAppointmentDTO);
         Task<IEnumerable<AppointmentDTO>> GetAppointmentsByProfessionalId(Guid professionalId);
+        Task ConfirmAppointment(Guid id);
+        Task CancelExpiredPendingAppointmentsAsync(Guid id);
 
 
     }

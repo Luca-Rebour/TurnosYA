@@ -82,5 +82,20 @@ namespace Infrastructure.Repository
 
 
         }
+
+
+        public async Task<IEnumerable<Appointment>> GetPendingAppointmentsByUserIdAsync(Guid id)
+        {
+            return await _context.Appointments
+                .Where(a => (a.ProfessionalId == id || a.CustomerId == id) && a.Status == 0)
+                .ToListAsync();
+
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

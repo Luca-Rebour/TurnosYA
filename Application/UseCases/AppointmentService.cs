@@ -57,5 +57,34 @@ namespace Application.UseCases
             IEnumerable<AppointmentDTO> result = _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
             return result;
         }
+
+        public async Task CancelExpiredPendingAppointmentsAsync(Guid professionalId)
+        {
+            DateTime now = DateTime.UtcNow;
+
+            IEnumerable<Appointment> pendingAppointments = await _repository.GetPendingAppointmentsByUserIdAsync(professionalId);
+
+            IEnumerable<Appointment> toCancel = pendingAppointments
+                .Where(a => a.Date.ToUniversalTime() < now)
+                .ToList();
+
+            if (toCancel.Any())
+            {
+                foreach (Appointment appointment in toCancel)
+                {
+                    appointment.SetStatusCancelled();
+                }
+
+                await _repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task ConfirmAppointment(Guid appointmentId)
+        {
+            Appointment appointment = await _repository.GetByIdAsync(appointmentId);
+            appointment.SetStatusConfirmed();
+            await _repository.SaveChangesAsync();
+        }
+
     }
 }

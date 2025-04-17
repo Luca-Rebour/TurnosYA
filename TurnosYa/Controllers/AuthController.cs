@@ -3,6 +3,7 @@ using Application.DTOs.Customer;
 using Application.DTOs.Professional;
 using Application.Interfaces.Services;
 using Application.Interfaces.Services.Security;
+using Domain.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -14,9 +15,11 @@ namespace Api.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly IProfessionalService _professionalService;
-        public AuthController(ICustomerService customerService, IProfessionalService professionalService) {
+        private readonly IAppointmentService _appointmentService;
+        public AuthController(ICustomerService customerService, IProfessionalService professionalService, IAppointmentService appointmentService) {
             _customerService = customerService;
             _professionalService = professionalService;
+            _appointmentService = appointmentService;
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(
@@ -25,9 +28,10 @@ namespace Api.Controllers
         {
             foreach (var handler in handlers)
             {
-                var result = await handler.TryLoginAsync(request.Email, request.Password);
+                LoginResponseDTO result = await handler.TryLoginAsync(request.Email, request.Password);
                 if (result is not null)
                 {
+                    await _appointmentService.CancelExpiredPendingAppointmentsAsync(result.UserId);
                     return Ok(result);
                 }
             }
@@ -36,25 +40,26 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("me")]
-        public async Task<IActionResult> GetCurrentUser()
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        //[HttpGet("me")]
+        //public async Task<IActionResult> GetCurrentUser()
+        //{
+        //    Guid userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        //    string role = User.FindFirst(ClaimTypes.Role)?.Value;
+        //    _appointmentService.CancelExpiredPendingAppointmentsAsync(userId);
 
-            if (role == "customer")
-            {
-                CustomerDTO customer = await _customerService.GetById(Guid.Parse(userId));
-                return Ok(customer);
-            }
+        //    if (role == "customer")
+        //    {
+        //        CustomerDTO customer = await _customerService.GetById(userId);
+        //        return Ok(customer);
+        //    }
 
-            if (role == "professional")
-            {
-                ProfessionalDTO professional = await _professionalService.GetById(Guid.Parse(userId));
-                return Ok(professional);
-            }
+        //    if (role == "professional")
+        //    {
+        //        ProfessionalDTO professional = await _professionalService.GetById(userId);
+        //        return Ok(professional);
+        //    }
 
-            return Unauthorized();
-        }
+        //    return Unauthorized();
+        //}
     }
 }

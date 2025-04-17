@@ -67,5 +67,6 @@ namespace Infrastructure.Repository
             professional.UpdateAvailability(slots);
 
         }
+
     }
 }

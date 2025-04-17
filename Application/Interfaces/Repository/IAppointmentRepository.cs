@@ -15,6 +15,8 @@ namespace Application.Interfaces.Repository
         Task<Appointment> GetByIdAsync(Guid id);
         Task<IEnumerable<Appointment>> GetAppointmentsByProfessionalId(Guid professionalId);
         Task<IEnumerable<Customer>> GetCustomersByProfessionalId(Guid professionalId);
+        Task<IEnumerable<Appointment>> GetPendingAppointmentsByUserIdAsync(Guid id);
+        Task SaveChangesAsync();
         Task DeleteAsync(Guid id);
 
     }

@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/appointment")]
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _service;
@@ -43,6 +43,14 @@ namespace Api.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             IEnumerable<AppointmentDTO> result = await _service.GetAppointmentsByProfessionalId(Guid.Parse(userId));
             return Ok(result);
+        }
+
+        [HttpPatch("appointments/{id}")]
+        public async Task<IActionResult> ConfirmAppointment(Guid id)
+        {
+            AppointmentDTO appointment = await _service.GetById(id);
+            await _service.ConfirmAppointment(id);
+            return Ok();
         }
 
     }
