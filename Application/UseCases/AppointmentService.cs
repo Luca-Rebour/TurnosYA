@@ -46,8 +46,16 @@ namespace Application.UseCases
         {
             Appointment appointment = await _repository.GetByIdAsync(id);
             _mapper.Map(updateAppointmentDTO, appointment);
+            await _repository.UpdateAsync(id, appointment);
             return _mapper.Map<AppointmentDTO>(appointment);
 
+        }
+
+        public async Task<IEnumerable<AppointmentDTO>> GetAppointmentsByProfessionalId(Guid id)
+        {
+            IEnumerable<Appointment> appointments = await _repository.GetAppointmentsByProfessionalId(id);
+            IEnumerable<AppointmentDTO> result = _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
+            return result;
         }
     }
 }

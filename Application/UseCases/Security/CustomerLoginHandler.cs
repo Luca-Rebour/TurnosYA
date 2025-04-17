@@ -28,7 +28,7 @@ namespace Application.UseCases.Security
             if (customer is null || !_authPasswordService.VerifyPassword(customer.PasswordHash, password))
                 return null;
 
-            var token = _jwtService.GenerateToken(customer.Id.ToString(), "customer");
+            var token = _jwtService.GenerateToken(customer.Id.ToString(), customer.Name, "customer");
 
             return new LoginResponseDTO
             {

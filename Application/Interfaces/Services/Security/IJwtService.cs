@@ -8,7 +8,7 @@ namespace Application.Interfaces.Services.Security
 {
     public interface IJwtService
     {
-        string GenerateToken(string userId, string role);
+        string GenerateToken(string userId, string name, string role);
     }
 
 }

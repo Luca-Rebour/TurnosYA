@@ -74,3 +74,7 @@ appsettings.json
 appsettings.*.json
 !appsettings.Development.json
 >>>>>>> a1245358ee1971eac9188c5b277e114d04fd0efa
+
+**/obj/
+**/bin/
+

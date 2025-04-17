@@ -13,5 +13,6 @@ namespace Application.DTOs.Auth
         public string Role { get; set; }
         public Guid UserId { get; set; }
 
+
     }
 }

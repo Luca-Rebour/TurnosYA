@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Appointment;
+using Application.DTOs.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Application.Interfaces.Services
         Task<AppointmentDTO> Create(CreateAppointmentDTO appointmentDTO);
         Task<AppointmentDTO> GetById(Guid id);
         Task<AppointmentDTO> Update(Guid id, UpdateAppointmentDTO updateAppointmentDTO);
-        
+        Task<IEnumerable<AppointmentDTO>> GetAppointmentsByProfessionalId(Guid professionalId);
+
+
     }
 }

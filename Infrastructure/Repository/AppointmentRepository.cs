@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repository;
+﻿using Application.DTOs.Customer;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -57,5 +58,29 @@ namespace Infrastructure.Repository
             return existingAppointment;
         }
 
+        public async Task<IEnumerable<Appointment>> GetAppointmentsByProfessionalId(Guid professionalId)
+        {
+            IEnumerable<Appointment> appointments = await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.Professional)
+                .Where(a => a.ProfessionalId == professionalId)
+                .ToListAsync();
+
+            return appointments;
+        }
+
+
+        public async Task<IEnumerable<Customer>> GetCustomersByProfessionalId(Guid professionalId)
+        {
+            IEnumerable<Customer> customers = await _context.Appointments
+                .Where(a => a.ProfessionalId == professionalId)
+                .Select(a => a.Customer)
+                .Distinct()
+                .ToListAsync();
+
+            return customers;
+
+
+        }
     }
 }

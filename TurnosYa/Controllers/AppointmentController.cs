@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
@@ -35,7 +36,15 @@ namespace Api.Controllers
             AppointmentDTO result = await _service.Update(id, updatedAppointment);
             return Ok(result);
         }
-        
-   }
+
+        [HttpGet("userAppointments")]
+        public async Task<IActionResult> GetUserAppointments()
+        {   
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            IEnumerable<AppointmentDTO> result = await _service.GetAppointmentsByProfessionalId(Guid.Parse(userId));
+            return Ok(result);
+        }
+
+    }
 
 }

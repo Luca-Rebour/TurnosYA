@@ -31,7 +31,7 @@ namespace Application.UseCases.Security
 
             if (professional != null && _passwordService.VerifyPassword(professional.PasswordHash, password))
             {
-                var token = _jwtService.GenerateToken(professional.Id.ToString(), "professional");
+                var token = _jwtService.GenerateToken(professional.Id.ToString(), professional.Name, "professional");
                 return new LoginResponseDTO
                 {
                     Token = token,

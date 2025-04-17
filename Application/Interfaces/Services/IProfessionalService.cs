@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Availibility;
+using Application.DTOs.Customer;
 using Application.DTOs.Professional;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Application.Interfaces.Services
         Task<ProfessionalDTO> GetById(Guid id);
         Task<ProfessionalDTO> GetByEmail(string email);
         Task<ProfessionalInternalDTO> GetByEmailInternal(string email);
+        Task<IEnumerable<CustomerShortDTO>> GetCustomersAsync(Guid professionalId);
         Task Delete(Guid id);
     }
 

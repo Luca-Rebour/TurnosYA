@@ -17,12 +17,13 @@ namespace TurnosYa.Api.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(string userId, string role)
+        public string GenerateToken(string userId, string name, string role)
         {
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier, userId),
-            new Claim(ClaimTypes.Role, role)
+            new Claim(ClaimTypes.Role, role),
+            new Claim(ClaimTypes.Name, name)
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));

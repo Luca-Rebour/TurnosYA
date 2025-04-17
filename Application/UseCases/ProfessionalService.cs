@@ -6,6 +6,10 @@ using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
 using Application.Exceptions;
+using Application.DTOs.Appointment;
+using Application.DTOs.Customer;
+using Application.Interfaces.Repository;
+
 
 namespace Application.UseCases
 {
@@ -15,13 +19,15 @@ namespace Application.UseCases
         private readonly IMapper _mapper;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUserEmailValidatorService _userEmailValidatorService;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public ProfessionalService(IProfessionalRepository repository, IMapper mapper, IPasswordHasher passwordHasher, IUserEmailValidatorService userEmailValidatorService)
+        public ProfessionalService(IProfessionalRepository repository, IMapper mapper, IPasswordHasher passwordHasher, IUserEmailValidatorService userEmailValidatorService, IAppointmentRepository appointmentRepository)
         {
             _repository = repository;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
             _userEmailValidatorService = userEmailValidatorService;
+            _appointmentRepository = appointmentRepository;
         }
 
 
@@ -61,20 +67,16 @@ namespace Application.UseCases
 
         public async Task<ProfessionalDTO> Update(Guid id, UpdateProfessionalDTO dto)
         {
-            // 1. Traer el profesional existente
             Professional professional = await _repository.GetByIdAsync(id);
             if (professional == null)
             {
                 throw new Exception("Profesional no encontrado");
             }
 
-            // 2. Mapear sobre la instancia existente
-            _mapper.Map(dto, professional); // AutoMapper actualiza las propiedades
+            _mapper.Map(dto, professional);
 
-            // 3. Guardar cambios
             await _repository.UpdateAsync(id, professional);
 
-            // 4. Devolver el DTO actualizado
             return _mapper.Map<ProfessionalDTO>(professional);
         }
 
@@ -97,8 +99,12 @@ namespace Application.UseCases
             return _mapper.Map<ProfessionalInternalDTO>(professional);
         }
 
-
-
+        public async Task<IEnumerable<CustomerShortDTO>> GetCustomersAsync(Guid professionalId)
+        {
+            IEnumerable<Customer> customers = await _appointmentRepository.GetCustomersByProfessionalId(professionalId);
+            IEnumerable<CustomerShortDTO> customersDTO = _mapper.Map<IEnumerable<CustomerShortDTO>>(customers);
+            return customersDTO;
+        }
     }
 
 }
