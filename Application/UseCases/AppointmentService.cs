@@ -4,11 +4,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Application.UseCases
 {
@@ -17,24 +13,33 @@ namespace Application.UseCases
         private IAppointmentRepository _repository;
         private ICustomerRepository _customerRepository;
         private IProfessionalRepository _professionalRepository;
+        private IUserActivityService _activityService;
         private IMapper _mapper;
-        public AppointmentService(IAppointmentRepository repository, IMapper mapper, ICustomerRepository customerRepository, IProfessionalRepository professionalRepository)
+        public AppointmentService(IAppointmentRepository repository, IMapper mapper, ICustomerRepository customerRepository, IProfessionalRepository professionalRepository, IUserActivityService activityService)
         {
             _repository = repository;
             _mapper = mapper;
             _customerRepository = customerRepository;
             _professionalRepository = professionalRepository;
+            _activityService = activityService;
         }
         public async Task<AppointmentDTO> Create(CreateAppointmentDTO appointmentDTO)
         {
             Appointment appointment = _mapper.Map<Appointment>(appointmentDTO);
+
             Customer customer = await _customerRepository.GetByIdAsync(appointmentDTO.CustomerId);
             Professional professional = await _professionalRepository.GetByIdAsync(appointmentDTO.ProfessionalId);
+
             appointment.SetCustomer(customer);
             appointment.SetProfessional(professional);
+
             await _repository.AddAsync(appointment);
+
+            await _activityService.CreateAsync(appointment.Id, customer.Id, professional.Id, ActivityType.AppointmentCreated, $"Customer {customer.Name} {customer.LastName} booked an appointment for {appointment.Date:dd/MM/yyyy HH:mm}.");
+
             return _mapper.Map<AppointmentDTO>(appointment);
         }
+
 
         public async Task<AppointmentDTO> GetById(Guid id)
         {

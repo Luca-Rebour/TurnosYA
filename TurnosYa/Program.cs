@@ -73,6 +73,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAvailabilitySlotRepository, AvailabilitySlotRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
 
 // Inyeccion de dependencias de servicios
 builder.Services.AddScoped<ILoginHandler, ProfessionalLoginHandler>();
@@ -85,6 +86,8 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IAvailabilitySlotService, AvailabilitySlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IUserEmailValidatorService, UserEmailValidator>();
+builder.Services.AddScoped<IUserActivityService, UserActivityService>();
+
 
 builder.Services.AddAutoMapper(typeof(ProfessionalProfile).Assembly);
 
