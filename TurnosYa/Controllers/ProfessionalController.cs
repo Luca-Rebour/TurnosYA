@@ -1,14 +1,10 @@
 ﻿using Application.DTOs.Appointment;
-using Application.DTOs.Availability;
-using Application.DTOs.Availibility;
 using Application.DTOs.Customer;
 using Application.DTOs.Professional;
 using Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.UseCases;
-using Domain.Entities;
+using Application.Interfaces.UseCases.Appointments;
+using Application.Interfaces.UseCases.Professionals;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -18,13 +14,26 @@ namespace Api.Controllers
     [ApiController]
     public class ProfessionalController : Controller
     {
-        private readonly IProfessionalService _service;
-        private readonly IAppointmentService _appointmentService;
+        private readonly ICreateProfessional _createProfessional;
+        private readonly IGetProfessionalById _getProfessionalById;
+        private readonly IUpdateProfessional _updateProfessional;
+        private readonly IGetAppointmentsByProfessionalId _getAppointmentsByProfessionalId;
+        private readonly IGetProfessionalCustomers _getProfessionalCustomers;
 
-        public ProfessionalController(IProfessionalService service, IAppointmentService appointmentService)
+
+        public ProfessionalController(
+            ICreateProfessional createProfessional,
+            IGetProfessionalById getProfessionalById,
+            IUpdateProfessional updateProfessional,
+            IGetAppointmentsByProfessionalId getAppointmentsByProfessionalId,
+            IGetProfessionalCustomers getProfessionalCustomers
+            )
         {
-            _service = service;
-            _appointmentService = appointmentService;
+            _createProfessional = createProfessional;
+            _getProfessionalById = getProfessionalById;
+            _updateProfessional = updateProfessional;
+            _getAppointmentsByProfessionalId = getAppointmentsByProfessionalId;
+            _getProfessionalCustomers = getProfessionalCustomers;
         }
 
         [HttpPost]
@@ -32,7 +41,7 @@ namespace Api.Controllers
         {
             try
             {
-                ProfessionalDTO professional = await _service.Create(createProfessionalDTO);
+                ProfessionalDTO professional = await _createProfessional.ExecuteAsync(createProfessionalDTO);
                 return Ok(professional);
             }
             catch (EmailAlreadyExistsException ex)
@@ -45,13 +54,13 @@ namespace Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            ProfessionalDTO result = await _service.GetById(id);
+            ProfessionalDTO result = await _getProfessionalById.ExecuteAsync(id);
             return Ok(result);
         }
         [HttpPut]
         public async Task<IActionResult> Update(Guid id, UpdateProfessionalDTO updatedProfessional)
         {
-            ProfessionalDTO result = await _service.Update(id, updatedProfessional);
+            ProfessionalDTO result = await _updateProfessional.ExecuteAsync(id, updatedProfessional);
             return Ok(result);
         }
 
@@ -63,7 +72,7 @@ namespace Api.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            IEnumerable<AppointmentDTO> appointments = await _appointmentService.GetAppointmentsByProfessionalId(Guid.Parse(userId));
+            IEnumerable<AppointmentDTO> appointments = await _getAppointmentsByProfessionalId.ExecuteAsync(Guid.Parse(userId));
 
             return Ok(appointments);
         }
@@ -77,7 +86,7 @@ namespace Api.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            IEnumerable<CustomerShortDTO> customers = await _service.GetCustomersAsync(Guid.Parse(userId));
+            IEnumerable<CustomerShortDTO> customers = await _getProfessionalCustomers.ExecuteAsync(Guid.Parse(userId));
 
             return Ok(customers);
         }
