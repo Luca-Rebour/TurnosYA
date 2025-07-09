@@ -1,14 +1,12 @@
-﻿using Application.Interfaces.Services.Security;
-using Microsoft.Extensions.Configuration;
+﻿using Application.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace TurnosYa.Api.Services
 {
-    public class JwtService : IJwtService
+    public class JwtService : ITokenGenerator
     {
         private readonly IConfiguration _configuration;
 

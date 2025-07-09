@@ -1,8 +1,5 @@
-﻿using Application.DTOs.Appointment;
-using Application.DTOs.UserActivity;
-using Application.Interfaces.Services;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http;
+﻿using Application.DTOs.UserActivity;
+using Application.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -12,18 +9,20 @@ namespace Api.Controllers
     [ApiController]
     public class UserActivitiesController : Controller
     {
-        private readonly IUserActivityService _service;
+        private readonly IGetAllUserActivities _getAllUserActivities;
 
-        public UserActivitiesController(IUserActivityService service)
+        public UserActivitiesController(
+            IGetAllUserActivities getAllUserActivities
+            )
         {
-            _service = service;
+            _getAllUserActivities = getAllUserActivities;
         }
 
         [HttpGet("userActivities")]
         public async Task<IActionResult> GetUserActivities()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            IEnumerable<UserActivityDTO> result = await _service.GetAllAsync(Guid.Parse(userId));
+            IEnumerable<UserActivityDTO> result = await _getAllUserActivities.ExecuteAsync(Guid.Parse(userId));
             return Ok(result);
         }
     }
