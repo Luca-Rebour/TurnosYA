@@ -19,6 +19,7 @@ namespace Infrastructure
         public DbSet<AvailabilitySlot> AvailabilitySlots { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<ExternalCustomer> ExternalCustomers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
@@ -35,6 +36,7 @@ namespace Infrastructure
             modelBuilder.Entity<AvailabilitySlot>().HasKey(a => a.Id);
             modelBuilder.Entity<Notification>().HasKey(a => a.Id);
             modelBuilder.Entity<UserActivity>().HasKey(a => a.Id);
+            modelBuilder.Entity<ExternalCustomer>().HasKey(a => a.Id);
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Customer)
@@ -71,6 +73,12 @@ namespace Infrastructure
                 .WithMany()
                 .HasForeignKey(a => a.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExternalCustomer>()
+                .HasOne(a => a.CreatedByProfessional)
+                .WithMany()
+                .HasForeignKey(a => a.CreatedByProfessionalId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
 
         }

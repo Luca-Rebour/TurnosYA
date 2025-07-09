@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases.Appointments;
 using Application.UseCases.Appointments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -36,6 +37,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateAppointmentDTO dto)
         {
             AppointmentDTO result = await _createAppointment.ExecuteAsync(dto);
@@ -43,12 +45,14 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             AppointmentDTO result = await _getAppointmentById.ExecuteAsync(id);
             return Ok(result);
         }
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update(Guid id, UpdateAppointmentDTO updatedAppointment)
         {
             AppointmentDTO result = await _updateAppointment.ExecuteAsync(id, updatedAppointment);
@@ -56,6 +60,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("userAppointments")]
+        [Authorize]
         public async Task<IActionResult> GetUserAppointments()
         {   
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -64,6 +69,7 @@ namespace Api.Controllers
         }
 
         [HttpPatch("appointments/{id}")]
+        [Authorize]
         public async Task<IActionResult> ConfirmAppointment(Guid id)
         {
             AppointmentDTO appointment = await _getAppointmentById.ExecuteAsync(id);
