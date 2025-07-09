@@ -1,4 +1,4 @@
-using Application.Interfaces.Repository;
+﻿using Application.Interfaces.Repository;
 using Application.Mappers;
 using Infrastructure;
 using Infrastructure.Repository;
@@ -27,8 +27,44 @@ using Application.UseCases.User;
 using Application.Interfaces.UseCases.Users;
 using Application.UseCases.Users;
 using Application.Interfaces.Services;
+using Microsoft.OpenApi.Models;
+using Application.Interfaces.UseCases.ExternalCustomers;
+using Application.UseCases.ExternalCustomers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ESTO PERMITE USAR JWT EN SWAGGER, NO NECESARIO EN PRODUCCION
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TurnosYa API", Version = "v1" });
+
+    // 🔐 Configurar soporte para JWT
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Ingrese el token JWT en este formato: Bearer {token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 
 // Configuracion de CORS
 builder.Services.AddCors(options =>
@@ -48,7 +84,7 @@ builder.Services.AddSwaggerGen();
 // Leer config JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
-// Autenticaci�n JWT
+// Autenticación JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -87,6 +123,7 @@ builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAvailabilitySlotRepository, AvailabilitySlotRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
+builder.Services.AddScoped<IExternalCustomerRepository, ExternalCustomerRepository>();
 
 // Inyeccion de dependencias de UseCases de Appointments
 builder.Services.AddScoped<ICancelExpiredPendingAppointments, CancelExpiredPendingAppointments>();
@@ -130,8 +167,20 @@ builder.Services.AddScoped<IGetAllUserActivities, GetAllUserActivities>();
 builder.Services.AddScoped<IGetUserByEmail, GetUserByEmail>();
 builder.Services.AddScoped<IValidateUserEmail, ValidateUserEmail>();
 
+// Inyeccion de dependencias de UseCases de ExternalCustomers
+builder.Services.AddScoped<IGetExternalCustomerByEmail, GetExternalCustomerByEmail>();
+builder.Services.AddScoped<IGetExternalCustomerByPhone, GetExternalCustomerByPhone>();
+builder.Services.AddScoped<IGetExternalCustomersByProfessionalId, GetExternalCustomersByProfessionalId>();
+builder.Services.AddScoped<ICreateExternalCustomer, CreateExternalCustomer>();
+
 
 builder.Services.AddAutoMapper(typeof(ProfessionalProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(AvailabilityProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(CustomerProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(NotificationProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(AppointmentProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(UserActivityProfile).Assembly);
+
 
 var app = builder.Build();
 
