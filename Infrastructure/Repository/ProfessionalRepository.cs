@@ -34,6 +34,31 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> GetActiveClients(Guid professionalId)
+        {
+            var today = DateTime.Today;
+            var lastPeriod = today.AddDays(-60);
+
+            var internalActiveClients = await _context.InternalAppointments
+                .Where(a => a.ProfessionalId == professionalId &&
+                            (a.Date >= lastPeriod))
+                .Select(a => a.CustomerId)
+                .Distinct()
+                .ToListAsync();
+
+            var externalActiveClients = await _context.ExternalAppointments
+                .Where(a => a.ProfessionalId == professionalId &&
+                            (a.Date >= lastPeriod))
+                .Select(a => a.ExternalCustomerId)
+                .Distinct()
+                .ToListAsync();
+
+            var totalActiveClients = internalActiveClients.Count + externalActiveClients.Count;
+
+            return totalActiveClients;
+
+        }
+
         public async Task<Professional> GetByIdAsync(Guid id)
         {
             return  await _context.Professionals

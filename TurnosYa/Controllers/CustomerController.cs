@@ -31,15 +31,9 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCustomerDTO CreateCustomerDTO)
         {
-            try
-            {
                 CustomerDTO customer = await _createCustomer.ExecuteAsync(CreateCustomerDTO);
                 return Ok(customer);
-            }
-            catch (EmailAlreadyExistsException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
+
         }
 
         [HttpGet("{id}")]

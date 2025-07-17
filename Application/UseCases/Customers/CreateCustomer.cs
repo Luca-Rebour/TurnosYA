@@ -32,6 +32,8 @@ namespace Application.UseCases.Customers
                 throw new EmailAlreadyExistsException(createCustomerDTO.Email);
             }
 
+            createCustomerDTO.Validate();
+
             string passwordHash = _passwordHasher.Hash(createCustomerDTO.Password);
 
             Customer newCustomer = _mapper.Map<Customer>(createCustomerDTO);

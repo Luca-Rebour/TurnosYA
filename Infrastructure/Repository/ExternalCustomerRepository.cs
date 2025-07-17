@@ -20,6 +20,7 @@ namespace Infrastructure.Repository
         }
         public async Task<ExternalCustomer> AddAsync(ExternalCustomer externalCustomer)
         {
+
             await _context.ExternalCustomers.AddAsync(externalCustomer);
             await _context.SaveChangesAsync();
             return externalCustomer;

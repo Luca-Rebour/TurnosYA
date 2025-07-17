@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Api.Controllers
 {
-    [Route("api/external-customer")]
+    [Route("api/external-customers")]
     [ApiController]
     public class ExternalCustomerController : Controller
     {
@@ -38,78 +38,53 @@ namespace Api.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateExternalCustomerDTO createExternalCustomerDTO)
         {
-            try
-            {
-                Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                createExternalCustomerDTO.CreatedByProfessionalId = professionalId;
+            Console.WriteLine("📦 Datos recibidos:");
+            Console.WriteLine($"Name: {createExternalCustomerDTO.Name}");
+            Console.WriteLine($"LastName: {createExternalCustomerDTO.LastName}");
+            Console.WriteLine($"Phone: {createExternalCustomerDTO.Phone}");
+            Console.WriteLine($"Email: {createExternalCustomerDTO.Email}");
+            Console.WriteLine($"CreatedByProfessionalId: {createExternalCustomerDTO.CreatedByProfessionalId}");
+            var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                ExternalCustomer ret = await _createExternalCustomer.Execute(createExternalCustomerDTO);
-                return Ok(ret);
-            }
-            catch(Exception ex)
+            if (string.IsNullOrWhiteSpace(claimValue) || !Guid.TryParse(claimValue, out Guid professionalId))
             {
-                return BadRequest(ex.Message);
+                Console.WriteLine("❌ No se pudo obtener un GUID válido desde el token.");
+                return Unauthorized("Invalid or missing user ID in token.");
             }
+            Console.WriteLine($"PROFESSIONAL ID: {claimValue}");
+            createExternalCustomerDTO.CreatedByProfessionalId = professionalId;
+            ExternalCustomer ret = await _createExternalCustomer.Execute(createExternalCustomerDTO);
+            return Ok(ret);
         }
 
         [HttpGet("by-email")]
         [Authorize]
         public async Task<IActionResult> GetByEmail(string email)
         {
-            try
-            {
                 Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 ExternalCustomer ret = await _getExternalCustomerByEmail.Execute(email, professionalId);
                 return Ok(ret);
-            }
-            catch(EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        
         }
 
         [HttpGet("by-phone")]
         [Authorize]
         public async Task<IActionResult> GetByPhone(string phone)
         {
-            try
-            {
+
                 Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 ExternalCustomer ret = await _getExternalCustomerByPhone.Execute(phone, professionalId);
                 return Ok(ret);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpGet("by-professional")]
         [Authorize]
         public async Task<IActionResult> GetByProfessionalId()
         {
-            try
-            {
                 Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 IEnumerable<ExternalCustomer> ret = await _getExternalCustomersByProfessionalId.Execute(professionalId);
                 return Ok(ret);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
         }
     }
 }

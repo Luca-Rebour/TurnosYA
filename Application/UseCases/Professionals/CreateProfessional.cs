@@ -28,6 +28,7 @@ namespace Application.UseCases.Professionals
             {
                 throw new EmailAlreadyExistsException(createProfessionalDTO.Email);
             }
+            createProfessionalDTO.Validate();
             string password = _passwordHasher.Hash(createProfessionalDTO.Password);
 
             Professional professional = _mapper.Map<Professional>(createProfessionalDTO);

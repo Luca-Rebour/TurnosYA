@@ -9,24 +9,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.Appointments
+namespace Application.UseCases.ExternalAppointments
 {
-    public class UpdateAppointment: IUpdateAppointment
+    public class UpdateExternalAppointment : IUpdateExternalAppointment
     {
-        private IAppointmentRepository _repository;
+        private IExternalAppointmentRepository _repository;
         private IMapper _mapper;
-        public UpdateAppointment(IAppointmentRepository repository, IMapper mapper)
+        public UpdateExternalAppointment(IExternalAppointmentRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<AppointmentDTO> ExecuteAsync(Guid id, UpdateAppointmentDTO updateAppointmentDTO)
+        public async Task<ExternalAppointmentDTO> ExecuteAsync(Guid id, UpdateExternalAppointmentDTO updateAppointmentDTO)
         {
-            Appointment appointment = await _repository.GetByIdAsync(id);
+            ExternalAppointment appointment = await _repository.GetByIdAsync(id);
             _mapper.Map(updateAppointmentDTO, appointment);
             await _repository.UpdateAsync(id, appointment);
-            return _mapper.Map<AppointmentDTO>(appointment);
+            return _mapper.Map<ExternalAppointmentDTO>(appointment);
 
         }
     }

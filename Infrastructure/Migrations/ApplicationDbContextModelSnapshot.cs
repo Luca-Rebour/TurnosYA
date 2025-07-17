@@ -70,28 +70,20 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CanceledBy")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DurationMinutes")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProfessionalId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProfessionalId");
-
                     b.ToTable("Appointments");
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entities.AvailabilitySlot", b =>
@@ -120,6 +112,36 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ProfessionalId");
 
                     b.ToTable("AvailabilitySlots");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ExternalCustomer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedByProfessionalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByProfessionalId");
+
+                    b.ToTable("ExternalCustomers");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -195,23 +217,38 @@ namespace Infrastructure.Migrations
                     b.ToTable("Professionals", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("Domain.Entities.ExternalAppointment", b =>
                 {
-                    b.HasOne("Domain.Entities.Customer", "Customer")
-                        .WithMany("Appointments")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("Domain.Entities.Appointment");
 
-                    b.HasOne("Domain.Entities.Professional", "Professional")
-                        .WithMany("Appointments")
-                        .HasForeignKey("ProfessionalId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<Guid>("ExternalCustomerId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Customer");
+                    b.Property<Guid>("ProfessionalId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Professional");
+                    b.HasIndex("ExternalCustomerId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("ExternalAppointments", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.InternalAppointment", b =>
+                {
+                    b.HasBaseType("Domain.Entities.Appointment");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfessionalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("InternalAppointments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AvailabilitySlot", b =>
@@ -223,6 +260,16 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Professional");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ExternalCustomer", b =>
+                {
+                    b.HasOne("Domain.Entities.Professional", "CreatedByProfessional")
+                        .WithMany()
+                        .HasForeignKey("CreatedByProfessionalId")
+                        .IsRequired();
+
+                    b.Navigation("CreatedByProfessional");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -281,21 +328,78 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.ExternalAppointment", b =>
+                {
+                    b.HasOne("Domain.Entities.ExternalCustomer", "ExternalCustomer")
+                        .WithMany("ExternalAppointments")
+                        .HasForeignKey("ExternalCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Appointment", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.ExternalAppointment", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Professional", "Professional")
+                        .WithMany("ExternalAppointments")
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ExternalCustomer");
+
+                    b.Navigation("Professional");
+                });
+
+            modelBuilder.Entity("Domain.Entities.InternalAppointment", b =>
+                {
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithMany("InternalAppointments")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Appointment", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.InternalAppointment", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Professional", "Professional")
+                        .WithMany("InternalAppointments")
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Professional");
+                });
+
             modelBuilder.Entity("Domain.Abstract.User", b =>
                 {
                     b.Navigation("Notifications");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ExternalCustomer", b =>
+                {
+                    b.Navigation("ExternalAppointments");
+                });
+
             modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("InternalAppointments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Professional", b =>
                 {
-                    b.Navigation("Appointments");
-
                     b.Navigation("Availability");
+
+                    b.Navigation("ExternalAppointments");
+
+                    b.Navigation("InternalAppointments");
                 });
 #pragma warning restore 612, 618
         }

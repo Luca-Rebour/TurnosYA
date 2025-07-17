@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Appointment;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Application.Interfaces.UseCases.Appointments
 {
     public interface IGetAppointmentById
     {
-        Task<AppointmentDTO> ExecuteAsync(Guid id);
+        Task<Appointment> Execute(Guid id);
     }
 }

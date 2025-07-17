@@ -16,12 +16,12 @@ namespace Domain.Abstract
         public string Phone { get; private set; }
         public DateTime BirthDate { get; private set; }
         public string PasswordHash { get; private set; }
-        public ICollection<Appointment> Appointments { get; private set; }
+        public ICollection<InternalAppointment> InternalAppointments { get; private set; }
         public DateTime RegistrationDate { get; private set; }
         public ICollection<Notification> Notifications { get; private set; }
         public User()
         {
-            Appointments = new List<Appointment>();
+            InternalAppointments = new List<InternalAppointment>();
             Notifications = new List<Notification>();
             RegistrationDate = DateTime.UtcNow;
         }
@@ -36,7 +36,7 @@ namespace Domain.Abstract
             BirthDate = birthDate;
             PasswordHash = passwordHash;
             Notifications = new List<Notification>();
-            Appointments = new List<Appointment>();
+            InternalAppointments = new List<InternalAppointment>();
             RegistrationDate = DateTime.UtcNow;
         }
 

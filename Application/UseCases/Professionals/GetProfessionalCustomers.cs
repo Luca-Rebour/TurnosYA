@@ -15,19 +15,26 @@ namespace Application.UseCases.Professionals
     public class GetProfessionalCustomers: IGetProfessionalCustomers
     {
         private IProfessionalRepository _repository;
-        private IAppointmentRepository _appointmentRepository;
+        private IInternalAppointmentRepository _internalAppointmentRepository;
+        private IExternalAppointmentRepository _externalAppointmentRepository;
         private IMapper _mapper;
-        public GetProfessionalCustomers(IProfessionalRepository repository, IMapper mapper, IAppointmentRepository appointmentRepository)
+        public GetProfessionalCustomers(IProfessionalRepository repository, IMapper mapper, IInternalAppointmentRepository appointmentRepository, IExternalAppointmentRepository externalAppointmentRepository)
         {
             _repository = repository;
             _mapper = mapper;
-            _appointmentRepository = appointmentRepository;
+            _internalAppointmentRepository = appointmentRepository;
+            _externalAppointmentRepository = externalAppointmentRepository;
         }
         public async Task<IEnumerable<CustomerShortDTO>> ExecuteAsync(Guid professionalId)
         {
-            IEnumerable<Customer> customers = await _appointmentRepository.GetCustomersByProfessionalId(professionalId);
-            IEnumerable<CustomerShortDTO> customersDTO = _mapper.Map<IEnumerable<CustomerShortDTO>>(customers);
-            return customersDTO;
+            var customers = await _internalAppointmentRepository.GetCustomersByProfessionalId(professionalId);
+            var externalCustomers = await _externalAppointmentRepository.GetCustomersByProfessionalId(professionalId);
+
+            var customerDTOs = _mapper.Map<IEnumerable<CustomerShortDTO>>(customers);
+            var externalCustomerDTOs = _mapper.Map<IEnumerable<CustomerShortDTO>>(externalCustomers);
+
+            return customerDTOs.Concat(externalCustomerDTOs);
         }
+
     }
 }

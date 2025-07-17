@@ -9,6 +9,7 @@ namespace Domain.Abstract
 {
     public abstract class UserProfessional : User
     {
+        public ICollection<ExternalAppointment> ExternalAppointments { get; private set; }
         public ICollection<AvailabilitySlot> Availability { get; private set; }
         public abstract IEnumerable<Customer> GetCustomers();
         public abstract IEnumerable<AvailabilitySlot> GetAvailability();

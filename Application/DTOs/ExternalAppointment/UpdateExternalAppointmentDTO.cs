@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Appointment
 {
-    public class UpdateAppointmentDTO
+    public class UpdateExternalAppointmentDTO
     {
         public Status Status { get; set; }
         public DateTime? Date { get; set; }

@@ -17,7 +17,7 @@ namespace Application.DTOs.User
         public DateTime BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
 
-        public ICollection<AppointmentDTO>? Appointments { get; set; }
+        public ICollection<InternalAppointmentDTO>? Appointments { get; set; }
         public ICollection<NotificationDTO>? Notifications { get; set; }
     }
 

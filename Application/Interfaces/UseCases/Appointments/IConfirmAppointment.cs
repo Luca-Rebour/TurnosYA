@@ -8,6 +8,6 @@ namespace Application.Interfaces.UseCases.Appointments
 {
     public interface IConfirmAppointment
     {
-        Task ExecuteAsync(Guid appointmentId);
+        Task Execute(Guid id);
     }
 }

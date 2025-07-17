@@ -21,7 +21,7 @@ namespace Application.DTOs.UserActivity
 
         public CustomerShortDTO? Customer { get; set; }
         public ProfessionalShortDTO? Professional { get; set; }
-        public AppointmentDTO? Appointment { get; set; }
+        public InternalAppointmentDTO? Appointment { get; set; }
     }
 
 }

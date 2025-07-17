@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Appointment
 {
-    public class AppointmentDTO
+    public class InternalAppointmentDTO
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }

@@ -16,7 +16,9 @@ namespace Application.Mappers
         public ExternalCustomerProfile()
         {
             CreateMap<ExternalCustomer, CreateExternalCustomerDTO>();
-
+            CreateMap<CreateExternalCustomerDTO, ExternalCustomer>();
+            CreateMap<ExternalCustomer, ExternalCustomerDTO>();
+            CreateMap<ExternalCustomer, CustomerShortDTO>();
         }
     }
 }

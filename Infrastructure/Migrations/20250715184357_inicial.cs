@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CanceledBy = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -84,35 +99,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProfessionalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CanceledBy = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Professionals_ProfessionalId",
-                        column: x => x.ProfessionalId,
-                        principalTable: "Professionals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AvailabilitySlots",
                 columns: table => new
                 {
@@ -132,6 +118,58 @@ namespace Infrastructure.Migrations
                         principalTable: "Professionals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExternalCustomers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByProfessionalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalCustomers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalCustomers_Professionals_CreatedByProfessionalId",
+                        column: x => x.CreatedByProfessionalId,
+                        principalTable: "Professionals",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InternalAppointments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfessionalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InternalAppointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InternalAppointments_Appointments_Id",
+                        column: x => x.Id,
+                        principalTable: "Appointments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InternalAppointments_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InternalAppointments_Professionals_ProfessionalId",
+                        column: x => x.ProfessionalId,
+                        principalTable: "Professionals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,19 +207,65 @@ namespace Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_CustomerId",
-                table: "Appointments",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_ProfessionalId",
-                table: "Appointments",
-                column: "ProfessionalId");
+            migrationBuilder.CreateTable(
+                name: "ExternalAppointments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExternalCustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfessionalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalAppointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalAppointments_Appointments_Id",
+                        column: x => x.Id,
+                        principalTable: "Appointments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExternalAppointments_ExternalCustomers_ExternalCustomerId",
+                        column: x => x.ExternalCustomerId,
+                        principalTable: "ExternalCustomers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExternalAppointments_Professionals_ProfessionalId",
+                        column: x => x.ProfessionalId,
+                        principalTable: "Professionals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AvailabilitySlots_ProfessionalId",
                 table: "AvailabilitySlots",
+                column: "ProfessionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalAppointments_ExternalCustomerId",
+                table: "ExternalAppointments",
+                column: "ExternalCustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalAppointments_ProfessionalId",
+                table: "ExternalAppointments",
+                column: "ProfessionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalCustomers_CreatedByProfessionalId",
+                table: "ExternalCustomers",
+                column: "CreatedByProfessionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InternalAppointments_CustomerId",
+                table: "InternalAppointments",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InternalAppointments_ProfessionalId",
+                table: "InternalAppointments",
                 column: "ProfessionalId");
 
             migrationBuilder.CreateIndex(
@@ -212,10 +296,19 @@ namespace Infrastructure.Migrations
                 name: "AvailabilitySlots");
 
             migrationBuilder.DropTable(
+                name: "ExternalAppointments");
+
+            migrationBuilder.DropTable(
+                name: "InternalAppointments");
+
+            migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "UserActivities");
+
+            migrationBuilder.DropTable(
+                name: "ExternalCustomers");
 
             migrationBuilder.DropTable(
                 name: "Appointments");

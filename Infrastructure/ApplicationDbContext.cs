@@ -16,6 +16,8 @@ namespace Infrastructure
         public DbSet<Professional> Professionals { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<InternalAppointment> InternalAppointments { get; set; }
+        public DbSet<ExternalAppointment> ExternalAppointments { get; set; }
         public DbSet<AvailabilitySlot> AvailabilitySlots { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
@@ -28,27 +30,62 @@ namespace Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().UseTptMappingStrategy();
+            modelBuilder.Entity<Appointment>().UseTptMappingStrategy();
 
             modelBuilder.Entity<Professional>().ToTable("Professionals");
             modelBuilder.Entity<Customer>().ToTable("Customers");
+            modelBuilder.Entity<InternalAppointment>().ToTable("InternalAppointments");
+            modelBuilder.Entity<ExternalAppointment>().ToTable("ExternalAppointments");
 
-            modelBuilder.Entity<Appointment>().HasKey(a => a.Id);
             modelBuilder.Entity<AvailabilitySlot>().HasKey(a => a.Id);
             modelBuilder.Entity<Notification>().HasKey(a => a.Id);
             modelBuilder.Entity<UserActivity>().HasKey(a => a.Id);
             modelBuilder.Entity<ExternalCustomer>().HasKey(a => a.Id);
 
-            modelBuilder.Entity<Appointment>()
+            modelBuilder.Entity<InternalAppointment>()
+                .HasOne(i => i.Professional)
+                .WithMany(p => p.InternalAppointments)
+                .HasForeignKey(i => i.ProfessionalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExternalAppointment>()
+                .HasOne(e => e.Professional)
+                .WithMany(p => p.ExternalAppointments)
+                .HasForeignKey(e => e.ProfessionalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
+            modelBuilder.Entity<InternalAppointment>()
                 .HasOne(a => a.Customer)
-                .WithMany(c => c.Appointments)
+                .WithMany(c => c.InternalAppointments)
                 .HasForeignKey(a => a.CustomerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Appointment>()
-                .HasOne(a => a.Professional)
-                .WithMany(p => p.Appointments)
-                .HasForeignKey(a => a.ProfessionalId)
-                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExternalAppointment>()
+                .HasOne(a => a.ExternalCustomer)
+                .WithMany(c => c.ExternalAppointments)
+                .HasForeignKey(a => a.ExternalCustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+
+
+
+
+
+           
+
+
+
+
+
+
+
+
 
             modelBuilder.Entity<AvailabilitySlot>()
                 .HasOne(slot => slot.Professional)
@@ -57,10 +94,10 @@ namespace Infrastructure
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserActivity>()
-            .HasOne(a => a.Customer)
-            .WithMany()
-            .HasForeignKey(a => a.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(a => a.Customer)
+                .WithMany()
+                .HasForeignKey(a => a.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserActivity>()
                 .HasOne(a => a.Professional)

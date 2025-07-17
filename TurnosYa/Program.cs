@@ -30,6 +30,8 @@ using Application.Interfaces.Services;
 using Microsoft.OpenApi.Models;
 using Application.Interfaces.UseCases.ExternalCustomers;
 using Application.UseCases.ExternalCustomers;
+using Api.Middlewares;
+using Application.UseCases.ExternalAppointments;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,18 +122,20 @@ builder.Services.AddScoped<ITokenGenerator, JwtService>();
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IInternalAppointmentRepository, InternalAppointmentRepository>();
+builder.Services.AddScoped<IExternalAppointmentRepository, ExternalAppointmentRepository>();
 builder.Services.AddScoped<IAvailabilitySlotRepository, AvailabilitySlotRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
 builder.Services.AddScoped<IExternalCustomerRepository, ExternalCustomerRepository>();
 
 // Inyeccion de dependencias de UseCases de Appointments
-builder.Services.AddScoped<ICancelExpiredPendingAppointments, CancelExpiredPendingAppointments>();
-builder.Services.AddScoped<IConfirmAppointment, ConfirmAppointment>();
-builder.Services.AddScoped<ICreateAppointment, CreateAppointment>();
-builder.Services.AddScoped<IGetAppointmentById, GetAppointmentById>();
-builder.Services.AddScoped<IGetAppointmentsByProfessionalId, GetAppointmentsByProfessionalId>();
-builder.Services.AddScoped<IUpdateAppointment, UpdateAppointment>();
+builder.Services.AddScoped<ICancelExpiredPendingInternalAppointments, CancelExpiredPendingInternalAppointments>();
+builder.Services.AddScoped<IConfirmInternalAppointment, ConfirmInternalAppointment>();
+builder.Services.AddScoped<ICreateInternalAppointment, CreateInternalAppointment>();
+builder.Services.AddScoped<IGetInternalAppointmentById, GetInternalAppointmentById>();
+builder.Services.AddScoped<IGetInternalAppointmentsByProfessionalId, GetInternalAppointmentsByProfessionalId>();
+builder.Services.AddScoped<IUpdateInternalAppointment, UpdateInternalAppointment>();
 
 // Inyeccion de dependencias de UseCases de AvailabilitySlots
 builder.Services.AddScoped<ICreateAvailabilitySlot, CreateAvailabilitySlot>();
@@ -157,6 +161,7 @@ builder.Services.AddScoped<IGetProfessionalByEmailInternal, GetProfessionalByEma
 builder.Services.AddScoped<IGetProfessionalById, GetProfessionalById>();
 builder.Services.AddScoped<IGetProfessionalCustomers, GetProfessionalCustomers>();
 builder.Services.AddScoped<IUpdateProfessional, UpdateProfessional>();
+builder.Services.AddScoped<IGetProfessionalSummary, GetProfessionalSummary>();
 
 // Inyeccion de dependencias de UseCases de Security
 builder.Services.AddScoped<ILoginHandler, LoginHandler>();
@@ -167,22 +172,36 @@ builder.Services.AddScoped<IGetAllUserActivities, GetAllUserActivities>();
 builder.Services.AddScoped<IGetUserByEmail, GetUserByEmail>();
 builder.Services.AddScoped<IValidateUserEmail, ValidateUserEmail>();
 
+// Inyeccion de dependencias de UseCases de ExternalAppointments
+builder.Services.AddScoped<IConfirmAppointment, ConfirmAppointment>();
+builder.Services.AddScoped<IGetAppointmentById, GetAppointmentById>();
+
 // Inyeccion de dependencias de UseCases de ExternalCustomers
 builder.Services.AddScoped<IGetExternalCustomerByEmail, GetExternalCustomerByEmail>();
 builder.Services.AddScoped<IGetExternalCustomerByPhone, GetExternalCustomerByPhone>();
 builder.Services.AddScoped<IGetExternalCustomersByProfessionalId, GetExternalCustomersByProfessionalId>();
 builder.Services.AddScoped<ICreateExternalCustomer, CreateExternalCustomer>();
 
+// Inyeccion de dependencias de UseCases de ExternalAppointments
+builder.Services.AddScoped<IGetExternalAppointmentById, GetExternalAppointmentById>();
+builder.Services.AddScoped<IGetExternalAppointmentsByProfessionalId, GetExternalAppointmentsByProfessionalId>();
+builder.Services.AddScoped<ICancelExpiredPendingExternalAppointments, CancelExpiredPendingExternalAppointments>();
+builder.Services.AddScoped<IConfirmExternalAppointment, ConfirmExternalAppointment>();
+builder.Services.AddScoped<ICreateExternalAppointment, CreateExternalAppointment>();
+builder.Services.AddScoped<IUpdateExternalAppointment, UpdateExternalAppointment>();
+
 
 builder.Services.AddAutoMapper(typeof(ProfessionalProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(AvailabilityProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(CustomerProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(NotificationProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(AppointmentProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(InternalAppointmentProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(UserActivityProfile).Assembly);
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("AllowFrontend");
 
@@ -191,6 +210,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseAuthentication();
 app.UseAuthorization();

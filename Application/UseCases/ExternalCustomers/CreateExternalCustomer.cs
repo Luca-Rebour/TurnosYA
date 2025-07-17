@@ -23,8 +23,8 @@ namespace Application.UseCases.ExternalCustomers
         }
         public async Task<ExternalCustomer> Execute(CreateExternalCustomerDTO dto)
         {
+            dto.Validate();
             ExternalCustomer newExternalCustomer = _mapper.Map<ExternalCustomer>(dto);
-
             await _repository.AddAsync(newExternalCustomer);
             return newExternalCustomer;
         }

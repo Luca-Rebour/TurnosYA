@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repository;
+﻿using Application.Exceptions;
+using Application.Interfaces.Repository;
 using Application.Interfaces.UseCases.Appointments;
 using Domain.Entities;
 using System;
@@ -9,20 +10,27 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Appointments
 {
-    public class ConfirmAppointment: IConfirmAppointment
+    public class ConfirmAppointment : IConfirmAppointment
     {
-        private IAppointmentRepository _repository;
-        public ConfirmAppointment(IAppointmentRepository repository)
-        {
-            _repository = repository;
+        private readonly IGetAppointmentById _getAppointmentById;
+        private readonly IAppointmentRepository _appointmentRepository;
+        public ConfirmAppointment(IGetAppointmentById getAppointmentById, IAppointmentRepository appointmentRepository) { 
+            _getAppointmentById = getAppointmentById;
+            _appointmentRepository = appointmentRepository;
         }
-
-        public async Task ExecuteAsync(Guid appointmentId)
+        public async Task Execute(Guid id)
         {
-            Appointment appointment = await _repository.GetByIdAsync(appointmentId);
+            Appointment appointment = await _getAppointmentById.Execute(id);
+
+            if (appointment == null)
+            {
+                throw new EntityNotFoundException($"There is no appointment with id {id}");
+            }
+
             appointment.SetStatusConfirmed();
-            await _repository.SaveChangesAsync();
-        }
+            _appointmentRepository.UpdateAsync(appointment);
 
+            throw new NotImplementedException();
+        }
     }
 }

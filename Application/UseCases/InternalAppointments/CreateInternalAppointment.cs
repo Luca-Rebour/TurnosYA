@@ -9,14 +9,14 @@ using Domain.Enums;
 
 namespace Application.UseCases.Appointments
 {
-    public class CreateAppointment: ICreateAppointment
+    public class CreateInternalAppointment: ICreateInternalAppointment
     {
-        private IAppointmentRepository _repository;
+        private IInternalAppointmentRepository _repository;
         private ICustomerRepository _customerRepository;
         private IProfessionalRepository _professionalRepository;
         private ICreateUserActivity _createUserActivity;
         private IMapper _mapper;
-        public CreateAppointment(IAppointmentRepository repository, IMapper mapper, ICustomerRepository customerRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
+        public CreateInternalAppointment(IInternalAppointmentRepository repository, IMapper mapper, ICustomerRepository customerRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
         {
             _repository = repository;
             _mapper = mapper;
@@ -25,9 +25,10 @@ namespace Application.UseCases.Appointments
             _createUserActivity = createUserActivity;
         }
 
-        public async Task<AppointmentDTO> ExecuteAsync(CreateAppointmentDTO appointmentDTO)
+        public async Task<InternalAppointmentDTO> ExecuteAsync(CreateInternalAppointmentDTO appointmentDTO)
         {
-            Appointment appointment = _mapper.Map<Appointment>(appointmentDTO);
+            appointmentDTO.Validate();
+            InternalAppointment appointment = _mapper.Map<InternalAppointment>(appointmentDTO);
 
             Customer customer = await _customerRepository.GetByIdAsync(appointmentDTO.CustomerId);
             Professional professional = await _professionalRepository.GetByIdAsync(appointmentDTO.ProfessionalId);
@@ -39,7 +40,7 @@ namespace Application.UseCases.Appointments
 
             await _createUserActivity.ExecuteAsync(appointment.Id, customer.Id, professional.Id, ActivityType.AppointmentCreated, $"Customer {customer.Name} {customer.LastName} booked an appointment for {appointment.Date:dd/MM/yyyy HH:mm}.");
 
-            return _mapper.Map<AppointmentDTO>(appointment);
+            return _mapper.Map<InternalAppointmentDTO>(appointment);
         }
 
 

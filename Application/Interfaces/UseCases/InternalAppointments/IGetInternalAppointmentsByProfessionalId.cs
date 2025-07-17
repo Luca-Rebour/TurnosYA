@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.UseCases.Appointments
 {
-    public interface ICreateAppointment
+    public interface IGetInternalAppointmentsByProfessionalId
     {
-
-        Task<AppointmentDTO> ExecuteAsync(CreateAppointmentDTO appointmentDTO);
-
+        Task<IEnumerable<InternalAppointmentDTO>> ExecuteAsync(Guid id);
     }
 }

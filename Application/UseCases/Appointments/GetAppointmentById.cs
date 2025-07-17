@@ -1,7 +1,6 @@
-﻿using Application.DTOs.Appointment;
+﻿using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Application.Interfaces.UseCases.Appointments;
-using AutoMapper;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,20 +12,21 @@ namespace Application.UseCases.Appointments
 {
     public class GetAppointmentById: IGetAppointmentById
     {
-        private IAppointmentRepository _repository;
-        private IMapper _mapper;
-        public GetAppointmentById(IAppointmentRepository repository, IMapper mapper)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public GetAppointmentById(IAppointmentRepository appointmentRepository)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _appointmentRepository = appointmentRepository;
         }
 
-        public async Task<AppointmentDTO> ExecuteAsync(Guid id)
+        public async Task<Appointment> Execute(Guid id)
         {
-            Appointment appointment = await _repository.GetByIdAsync(id);
-            return _mapper.Map<AppointmentDTO>(appointment);
+            Appointment ap = await _appointmentRepository.GetByIdAsync(id);
+            if (ap != null)
+            {
+                throw new EntityNotFoundException($"There is no appointment with id {id}");
+            }
+
+            return ap;
         }
-
-
     }
 }

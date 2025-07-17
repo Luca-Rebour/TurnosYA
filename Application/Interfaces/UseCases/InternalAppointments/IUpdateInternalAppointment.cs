@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.UseCases.Appointments
 {
-    public interface IUpdateAppointment
+    public interface IUpdateInternalAppointment
     {
-        Task<AppointmentDTO> ExecuteAsync(Guid id, UpdateAppointmentDTO updateAppointmentDTO);
+        Task<InternalAppointmentDTO> ExecuteAsync(Guid id, UpdateInternalAppointmentDTO updateAppointmentDTO);
     }
 }

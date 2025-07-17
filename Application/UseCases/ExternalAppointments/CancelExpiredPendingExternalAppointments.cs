@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.Appointments
+namespace Application.UseCases.ExternalAppointments
 {
-    public class CancelExpiredPendingAppointments: ICancelExpiredPendingAppointments
+    public class CancelExpiredPendingExternalAppointments : ICancelExpiredPendingExternalAppointments
     {
-        private IAppointmentRepository _repository;
-        public CancelExpiredPendingAppointments(IAppointmentRepository repository)
+        private IExternalAppointmentRepository _repository;
+        public CancelExpiredPendingExternalAppointments(IExternalAppointmentRepository repository)
         {
             _repository = repository;
         }
@@ -21,15 +21,15 @@ namespace Application.UseCases.Appointments
         {
             DateTime now = DateTime.UtcNow;
 
-            IEnumerable<Appointment> pendingAppointments = await _repository.GetPendingAppointmentsByUserIdAsync(professionalId);
+            IEnumerable<ExternalAppointment> pendingAppointments = await _repository.GetPendingExternalAppointmentsByUserIdAsync(professionalId);
 
-            IEnumerable<Appointment> toCancel = pendingAppointments
+            IEnumerable<ExternalAppointment> toCancel = pendingAppointments
                 .Where(a => a.Date.ToUniversalTime() < now)
                 .ToList();
 
             if (toCancel.Any())
             {
-                foreach (Appointment appointment in toCancel)
+                foreach (ExternalAppointment appointment in toCancel)
                 {
                     appointment.SetStatusCancelled();
                 }

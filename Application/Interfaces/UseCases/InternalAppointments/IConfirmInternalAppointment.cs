@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.UseCases.Appointments
 {
-    public interface ICancelExpiredPendingAppointments
+    public interface IConfirmInternalAppointment
     {
-        Task ExecuteAsync(Guid professionalId);
+        Task ExecuteAsync(Guid appointmentId);
     }
 }

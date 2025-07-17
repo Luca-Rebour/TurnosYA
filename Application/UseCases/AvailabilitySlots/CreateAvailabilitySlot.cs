@@ -26,6 +26,7 @@ namespace Application.UseCases.AvailabilitySlots
         }
         public async Task<ProfessionalDTO> ExecuteAsync(CreateAvailabilitySlotDTO dto)
         {
+            dto.Validate();
             Professional professional = await _professionalRepository.GetByIdAsync(dto.ProfessionalId);
             AvailabilitySlot newSlot = _mapper.Map<AvailabilitySlot>(dto);
             newSlot.SetProfessional(professional);

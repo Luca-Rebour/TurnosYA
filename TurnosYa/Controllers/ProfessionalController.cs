@@ -10,23 +10,25 @@ using System.Security.Claims;
 
 namespace Api.Controllers
 {
-    [Route("api/professional")]
+    [Route("api/professionals")]
     [ApiController]
     public class ProfessionalController : Controller
     {
         private readonly ICreateProfessional _createProfessional;
         private readonly IGetProfessionalById _getProfessionalById;
         private readonly IUpdateProfessional _updateProfessional;
-        private readonly IGetAppointmentsByProfessionalId _getAppointmentsByProfessionalId;
+        private readonly IGetInternalAppointmentsByProfessionalId _getAppointmentsByProfessionalId;
         private readonly IGetProfessionalCustomers _getProfessionalCustomers;
+        private readonly IGetProfessionalSummary _getProfessionalSummary;
 
 
         public ProfessionalController(
             ICreateProfessional createProfessional,
             IGetProfessionalById getProfessionalById,
             IUpdateProfessional updateProfessional,
-            IGetAppointmentsByProfessionalId getAppointmentsByProfessionalId,
-            IGetProfessionalCustomers getProfessionalCustomers
+            IGetInternalAppointmentsByProfessionalId getAppointmentsByProfessionalId,
+            IGetProfessionalCustomers getProfessionalCustomers,
+            IGetProfessionalSummary getProfessionalSummary
             )
         {
             _createProfessional = createProfessional;
@@ -34,6 +36,7 @@ namespace Api.Controllers
             _updateProfessional = updateProfessional;
             _getAppointmentsByProfessionalId = getAppointmentsByProfessionalId;
             _getProfessionalCustomers = getProfessionalCustomers;
+            _getProfessionalSummary = getProfessionalSummary;
         }
 
         [HttpPost]
@@ -72,14 +75,14 @@ namespace Api.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            IEnumerable<AppointmentDTO> appointments = await _getAppointmentsByProfessionalId.ExecuteAsync(Guid.Parse(userId));
+            IEnumerable<InternalAppointmentDTO> appointments = await _getAppointmentsByProfessionalId.ExecuteAsync(Guid.Parse(userId));
 
             return Ok(appointments);
         }
 
 
-        [HttpGet("mycustomers")]
-        [Authorize(Roles = "professional")]
+        [HttpGet("my-customers")]
+        [Authorize]
         public async Task<IActionResult> GetMyCustomers()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -89,6 +92,17 @@ namespace Api.Controllers
             IEnumerable<CustomerShortDTO> customers = await _getProfessionalCustomers.ExecuteAsync(Guid.Parse(userId));
 
             return Ok(customers);
+        }
+
+        [HttpGet("summary")]
+        [Authorize]
+        public async Task<IActionResult> GetSummary()
+        {
+            Guid userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            SummaryDataDTO summary = await _getProfessionalSummary.ExecuteAsync(userId);
+
+            return Ok(summary);
         }
 
 

@@ -339,7 +339,6 @@ C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.AssemblyInfoInputs.cache
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.AssemblyInfo.cs
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.csproj.CoreCompileInputs.cache
-C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\Api.sourcelink.json
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\TurnosYa\obj\Debug\net8.0\staticwebassets.build.json
