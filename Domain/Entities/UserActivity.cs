@@ -11,27 +11,27 @@ namespace Domain.Entities
     {
         public Guid Id { get; private set; }
         public Guid AppointmentId { get; private set; }
-        public Guid CustomerId { get; private set; }
+        public Guid ClientId { get; private set; }
         public Guid ProfessionalId { get; private set; }
         public ActivityType Type { get; private set; }
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public Appointment? Appointment { get; private set; }
-        public Customer? Customer { get; private set; }
+        public Client? Client { get; private set; }
         public Professional? Professional { get; private set; }
 
         public UserActivity() { }
-        public UserActivity(Guid appointmentId, Guid customerId, Guid professionalId, ActivityType type, string? description, Appointment? appointment, Customer? customer, Professional? professional)
+        public UserActivity(Guid appointmentId, Guid clientId, Guid professionalId, ActivityType type, string? description, Appointment? appointment, Client? client, Professional? professional)
         {
             Id = new Guid();
             AppointmentId = appointmentId;
-            CustomerId = customerId;
+            ClientId = clientId;
             ProfessionalId = professionalId;
             Type = type;
             Description = description;
             CreatedAt = DateTime.UtcNow;
             Appointment = appointment;
-            Customer = customer;
+            Client = client;
             Professional = professional;
         }
     }

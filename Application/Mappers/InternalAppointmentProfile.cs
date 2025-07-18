@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Appointment;
-using Application.DTOs.Customer;
+using Application.DTOs.Client;
 using Application.DTOs.Professional;
 using AutoMapper;
 using Domain.Entities;

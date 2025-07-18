@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class ExternalAppointment: Appointment
     {
-        public Guid ExternalCustomerId { get; set; }
-        public ExternalCustomer ExternalCustomer { get; set; }
+        public Guid ExternalClientId { get; set; }
+        public ExternalClient ExternalClient { get; set; }
         public Guid ProfessionalId { get; set; }
         public Professional Professional { get; set; }
 
@@ -18,10 +18,10 @@ namespace Domain.Entities
 
         }
 
-        public void SetCustomer(ExternalCustomer externalCustomer)
+        public void SetClient(ExternalClient externalClient)
         {
-            ExternalCustomerId = externalCustomer.Id;
-            ExternalCustomer = externalCustomer;
+            ExternalClientId = externalClient.Id;
+            ExternalClient = externalClient;
 
         }
         public void SetProfessional(Professional professional)

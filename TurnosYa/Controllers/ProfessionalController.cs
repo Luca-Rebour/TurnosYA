@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Appointment;
-using Application.DTOs.Customer;
+using Application.DTOs.Client;
 using Application.DTOs.Professional;
 using Application.Exceptions;
 using Application.Interfaces.UseCases.Appointments;
@@ -18,7 +18,7 @@ namespace Api.Controllers
         private readonly IGetProfessionalById _getProfessionalById;
         private readonly IUpdateProfessional _updateProfessional;
         private readonly IGetInternalAppointmentsByProfessionalId _getAppointmentsByProfessionalId;
-        private readonly IGetProfessionalCustomers _getProfessionalCustomers;
+        private readonly IGetProfessionalClients _getProfessionalClients;
         private readonly IGetProfessionalSummary _getProfessionalSummary;
 
 
@@ -27,7 +27,7 @@ namespace Api.Controllers
             IGetProfessionalById getProfessionalById,
             IUpdateProfessional updateProfessional,
             IGetInternalAppointmentsByProfessionalId getAppointmentsByProfessionalId,
-            IGetProfessionalCustomers getProfessionalCustomers,
+            IGetProfessionalClients getProfessionalClients,
             IGetProfessionalSummary getProfessionalSummary
             )
         {
@@ -35,7 +35,7 @@ namespace Api.Controllers
             _getProfessionalById = getProfessionalById;
             _updateProfessional = updateProfessional;
             _getAppointmentsByProfessionalId = getAppointmentsByProfessionalId;
-            _getProfessionalCustomers = getProfessionalCustomers;
+            _getProfessionalClients = getProfessionalClients;
             _getProfessionalSummary = getProfessionalSummary;
         }
 
@@ -81,17 +81,17 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("my-customers")]
+        [HttpGet("my-clients")]
         [Authorize]
-        public async Task<IActionResult> GetMyCustomers()
+        public async Task<IActionResult> GetMyClients()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            IEnumerable<CustomerShortDTO> customers = await _getProfessionalCustomers.ExecuteAsync(Guid.Parse(userId));
+            IEnumerable<ClientShortDTO> clients = await _getProfessionalClients.ExecuteAsync(Guid.Parse(userId));
 
-            return Ok(customers);
+            return Ok(clients);
         }
 
         [HttpGet("summary")]

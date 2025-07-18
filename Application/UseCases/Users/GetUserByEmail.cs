@@ -10,25 +10,25 @@ namespace Application.UseCases.Users
 {
     public class GetUserByEmail: IGetUserByEmail
     {
-        private readonly ICustomerRepository _customerRepo;
+        private readonly IClientRepository _clientRepo;
         private readonly IProfessionalRepository _professionalRepo;
 
-        public GetUserByEmail(ICustomerRepository customerRepo, IProfessionalRepository professionalRepo)
+        public GetUserByEmail(IClientRepository clientRepo, IProfessionalRepository professionalRepo)
         {
-            _customerRepo = customerRepo;
+            _clientRepo = clientRepo;
             _professionalRepo = professionalRepo;
         }
 
         public async Task<UserInternalDTO> ExecuteAsync(string email)
         {
-            Customer customer = await _customerRepo.GetByMailAsync(email);
-            if (customer != null)
+            Client client = await _clientRepo.GetByMailAsync(email);
+            if (client != null)
             {
                 return new UserInternalDTO
                 {
-                    Email = customer.Email,
-                    Password = customer.PasswordHash,
-                    Rol = "Customer"
+                    Email = client.Email,
+                    Password = client.PasswordHash,
+                    Rol = "Client"
                 };
             }
 

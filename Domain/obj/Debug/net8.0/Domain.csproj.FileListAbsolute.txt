@@ -22,3 +22,15 @@ C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\refint\Domain.dll
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.pdb
 C:\Users\lucar\Desktop\Trabajos\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\ref\Domain.dll
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\bin\Debug\net8.0\Domain.deps.json
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\bin\Debug\net8.0\Domain.dll
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\bin\Debug\net8.0\Domain.pdb
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.dll
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\refint\Domain.dll
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\Domain.pdb
+C:\Users\lucar\Escritorio\Angular\TurnosYA\TurnosYA\Domain\obj\Debug\net8.0\ref\Domain.dll

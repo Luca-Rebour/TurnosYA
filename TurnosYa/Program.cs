@@ -16,8 +16,8 @@ using Application.Interfaces.UseCases.Appointments;
 using Application.UseCases.Appointments;
 using Application.Interfaces.UseCases.AvailabilitySlots;
 using Application.UseCases.AvailabilitySlots;
-using Application.Interfaces.UseCases.Customers;
-using Application.UseCases.Customers;
+using Application.Interfaces.UseCases.Clients;
+using Application.UseCases.Clients;
 using Application.Interfaces.UseCases.Notifications;
 using Application.UseCases.Notifications;
 using Application.Interfaces.UseCases.Professionals;
@@ -28,8 +28,8 @@ using Application.Interfaces.UseCases.Users;
 using Application.UseCases.Users;
 using Application.Interfaces.Services;
 using Microsoft.OpenApi.Models;
-using Application.Interfaces.UseCases.ExternalCustomers;
-using Application.UseCases.ExternalCustomers;
+using Application.Interfaces.UseCases.ExternalClients;
+using Application.UseCases.ExternalClients;
 using Api.Middlewares;
 using Application.UseCases.ExternalAppointments;
 
@@ -120,14 +120,14 @@ builder.Services.AddScoped<ITokenGenerator, JwtService>();
 
 // Inyeccion de dependencias de repositorios
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IInternalAppointmentRepository, InternalAppointmentRepository>();
 builder.Services.AddScoped<IExternalAppointmentRepository, ExternalAppointmentRepository>();
 builder.Services.AddScoped<IAvailabilitySlotRepository, AvailabilitySlotRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
-builder.Services.AddScoped<IExternalCustomerRepository, ExternalCustomerRepository>();
+builder.Services.AddScoped<IExternalClientRepository, ExternalClientRepository>();
 
 // Inyeccion de dependencias de UseCases de Appointments
 builder.Services.AddScoped<ICancelExpiredPendingInternalAppointments, CancelExpiredPendingInternalAppointments>();
@@ -142,13 +142,13 @@ builder.Services.AddScoped<ICreateAvailabilitySlot, CreateAvailabilitySlot>();
 builder.Services.AddScoped<IDeleteAvailabilitySlot, DeleteAvailabilitySlot>();
 builder.Services.AddScoped<IUpdateAvailabilitySlot, UpdateAvailabilitySlot>();
 
-// Inyeccion de dependencias de UseCases de Customers
-builder.Services.AddScoped<ICreateCustomer, CreateCustomer>();
-builder.Services.AddScoped<IDeleteCustomer, DeleteCustomer>();
-builder.Services.AddScoped<IGetCustomerByEmail, GetCustomerByEmail>();
-builder.Services.AddScoped<IGetCustomerById, GetCustomerById>();
-builder.Services.AddScoped<IGetCustomerByIdInternal, GetCustomerByIdInternal>();
-builder.Services.AddScoped<IUpdateCustomer, UpdateCustomer>();
+// Inyeccion de dependencias de UseCases de Clients
+builder.Services.AddScoped<ICreateClient, CreateClient>();
+builder.Services.AddScoped<IDeleteClient, DeleteClient>();
+builder.Services.AddScoped<IGetClientByEmail, GetClientByEmail>();
+builder.Services.AddScoped<IGetClientById, GetClientById>();
+builder.Services.AddScoped<IGetClientByIdInternal, GetClientByIdInternal>();
+builder.Services.AddScoped<IUpdateClient, UpdateClient>();
 
 // Inyeccion de dependencias de UseCases de Notifications
 builder.Services.AddScoped<ICreateNotification, CreateNotification>();
@@ -159,7 +159,7 @@ builder.Services.AddScoped<IDeleteProfessional, DeleteProfessional>();
 builder.Services.AddScoped<IGetProfessionalByEmail, GetProfessionalByEmail>();
 builder.Services.AddScoped<IGetProfessionalByEmailInternal, GetProfessionalByEmailInternal>();
 builder.Services.AddScoped<IGetProfessionalById, GetProfessionalById>();
-builder.Services.AddScoped<IGetProfessionalCustomers, GetProfessionalCustomers>();
+builder.Services.AddScoped<IGetProfessionalClients, GetProfessionalClients>();
 builder.Services.AddScoped<IUpdateProfessional, UpdateProfessional>();
 builder.Services.AddScoped<IGetProfessionalSummary, GetProfessionalSummary>();
 
@@ -176,11 +176,11 @@ builder.Services.AddScoped<IValidateUserEmail, ValidateUserEmail>();
 builder.Services.AddScoped<IConfirmAppointment, ConfirmAppointment>();
 builder.Services.AddScoped<IGetAppointmentById, GetAppointmentById>();
 
-// Inyeccion de dependencias de UseCases de ExternalCustomers
-builder.Services.AddScoped<IGetExternalCustomerByEmail, GetExternalCustomerByEmail>();
-builder.Services.AddScoped<IGetExternalCustomerByPhone, GetExternalCustomerByPhone>();
-builder.Services.AddScoped<IGetExternalCustomersByProfessionalId, GetExternalCustomersByProfessionalId>();
-builder.Services.AddScoped<ICreateExternalCustomer, CreateExternalCustomer>();
+// Inyeccion de dependencias de UseCases de ExternalClients
+builder.Services.AddScoped<IGetExternalClientByEmail, GetExternalClientByEmail>();
+builder.Services.AddScoped<IGetExternalClientByPhone, GetExternalClientByPhone>();
+builder.Services.AddScoped<IGetExternalClientsByProfessionalId, GetExternalClientsByProfessionalId>();
+builder.Services.AddScoped<ICreateExternalClient, CreateExternalClient>();
 
 // Inyeccion de dependencias de UseCases de ExternalAppointments
 builder.Services.AddScoped<IGetExternalAppointmentById, GetExternalAppointmentById>();
@@ -193,7 +193,7 @@ builder.Services.AddScoped<IUpdateExternalAppointment, UpdateExternalAppointment
 
 builder.Services.AddAutoMapper(typeof(ProfessionalProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(AvailabilityProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(CustomerProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(ClientProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(NotificationProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(InternalAppointmentProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(UserActivityProfile).Assembly);

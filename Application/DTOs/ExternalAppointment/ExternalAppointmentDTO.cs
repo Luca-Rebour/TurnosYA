@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Customer;
-using Application.DTOs.ExternalCustomer;
+﻿using Application.DTOs.Client;
+using Application.DTOs.ExternalClient;
 using Application.DTOs.Professional;
 using Domain.Enums;
 using System;
@@ -18,7 +18,7 @@ namespace Application.DTOs.Appointment
         public string Status { get; set; }
         public string? CancelledBy { get; set; }
 
-        public ExternalCustomerDTO ExternalCustomer { get; set; }
+        public ExternalClientDTO ExternalClient { get; set; }
         public ProfessionalShortDTO Professional { get; set; }
     }
 

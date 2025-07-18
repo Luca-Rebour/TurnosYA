@@ -14,9 +14,9 @@ namespace Application.UseCases.User
         {
             _userActivityRepository = userActivityRepository;
         }
-        public async Task ExecuteAsync(Guid appointmentId, Guid customerId, Guid professionalId, ActivityType type, string description)
+        public async Task ExecuteAsync(Guid appointmentId, Guid clientId, Guid professionalId, ActivityType type, string description)
         {
-            UserActivity act = new UserActivity(appointmentId, customerId, professionalId, type, description, null, null, null);
+            UserActivity act = new UserActivity(appointmentId, clientId, professionalId, type, description, null, null, null);
             await _userActivityRepository.AddAsync(act);
         }
     }

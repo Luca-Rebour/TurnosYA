@@ -10,14 +10,14 @@ namespace Application.DTOs.Professional
     {
         public int TodayAppointments { get; set; }
         public int ThisWeekAppointments { get; set; }
-        public int ActiveClients { get; set; }
+        public int Activeclients { get; set; }
         public int PendingConfirmations { get; set; }
 
-        public SummaryDataDTO(int todayAppointments, int thisWeekAppointments, int activeClients, int pendingConfirmations)
+        public SummaryDataDTO(int todayAppointments, int thisWeekAppointments, int activeclients, int pendingConfirmations)
         {
             TodayAppointments = todayAppointments;
             ThisWeekAppointments = thisWeekAppointments;
-            ActiveClients = activeClients;
+            Activeclients = activeclients;
             PendingConfirmations = pendingConfirmations;
         }
     }

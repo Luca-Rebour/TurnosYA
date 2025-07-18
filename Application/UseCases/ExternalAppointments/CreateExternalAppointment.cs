@@ -12,15 +12,15 @@ namespace Application.UseCases.ExternalAppointments
     public class CreateExternalAppointment : ICreateExternalAppointment
     {
         private IExternalAppointmentRepository _repository;
-        private IExternalCustomerRepository _ExternalcustomerRepository;
+        private IExternalClientRepository _ExternalclientRepository;
         private IProfessionalRepository _professionalRepository;
         private ICreateUserActivity _createUserActivity;
         private IMapper _mapper;
-        public CreateExternalAppointment(IExternalAppointmentRepository repository, IMapper mapper, IExternalCustomerRepository externalCustomerRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
+        public CreateExternalAppointment(IExternalAppointmentRepository repository, IMapper mapper, IExternalClientRepository externalClientRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
         {
             _repository = repository;
             _mapper = mapper;
-            _ExternalcustomerRepository = externalCustomerRepository;
+            _ExternalclientRepository = externalClientRepository;
             _professionalRepository = professionalRepository;
             _createUserActivity = createUserActivity;
         }
@@ -31,11 +31,11 @@ namespace Application.UseCases.ExternalAppointments
 
             ExternalAppointment appointment = _mapper.Map<ExternalAppointment>(appointmentDTO);
 
-            ExternalCustomer customer = await _ExternalcustomerRepository.GetByIdAsync(appointmentDTO.ExternalCustomerId);
+            ExternalClient client = await _ExternalclientRepository.GetByIdAsync(appointmentDTO.ExternalClientId);
             Professional professional = await _professionalRepository.GetByIdAsync(appointmentDTO.ProfessionalId);
             
 
-            appointment.SetCustomer(customer);
+            appointment.SetClient(client);
             appointment.SetProfessional(professional);
 
             await _repository.AddAsync(appointment);

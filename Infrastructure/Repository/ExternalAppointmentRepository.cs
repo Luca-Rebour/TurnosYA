@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Customer;
+﻿using Application.DTOs.Client;
 using Application.Interfaces.Repository;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +40,7 @@ namespace Infrastructure.Repository
         public async Task<ExternalAppointment> GetByIdAsync(Guid id)
         {
             return await _context.ExternalAppointments
-                .Include(a => a.ExternalCustomer)
+                .Include(a => a.ExternalClient)
                 .Include(a => a.Professional)
                 .FirstOrDefaultAsync(a => a.Id.Equals(id));
         }
@@ -61,7 +61,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<ExternalAppointment>> GetExternalAppointmentsByProfessionalId(Guid professionalId)
         {
             IEnumerable<ExternalAppointment> appointments = await _context.ExternalAppointments
-                .Include(a => a.ExternalCustomer)
+                .Include(a => a.ExternalClient)
                 .Include(a => a.Professional)
                 .Where(a => a.ProfessionalId == professionalId)
                 .ToListAsync();
@@ -70,15 +70,15 @@ namespace Infrastructure.Repository
         }
 
 
-        public async Task<IEnumerable<ExternalCustomer>> GetCustomersByProfessionalId(Guid professionalId)
+        public async Task<IEnumerable<ExternalClient>> GetClientsByProfessionalId(Guid professionalId)
         {
-            IEnumerable<ExternalCustomer> customers = await _context.ExternalAppointments
+            IEnumerable<ExternalClient> clients = await _context.ExternalAppointments
                 .Where(a => a.ProfessionalId == professionalId)
-                .Select(a => a.ExternalCustomer)
+                .Select(a => a.ExternalClient)
                 .Distinct()
                 .ToListAsync();
 
-            return customers;
+            return clients;
 
 
         }
@@ -87,7 +87,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<ExternalAppointment>> GetPendingExternalAppointmentsByUserIdAsync(Guid id)
         {
             return await _context.ExternalAppointments
-                .Where(a => (a.ProfessionalId == id || a.ExternalCustomerId == id) && a.Status == 0)
+                .Where(a => (a.ProfessionalId == id || a.ExternalClientId == id) && a.Status == 0)
                 .ToListAsync();
 
         }

@@ -11,15 +11,15 @@ namespace Application.DTOs.Appointment
 {
     public class CreateExternalAppointmentDTO
     {
-        public Guid ExternalCustomerId { get; set; }
+        public Guid ExternalClientId { get; set; }
         public Guid ProfessionalId { get; set; }
         public DateTime Date { get; set; }
         public int DurationMinutes { get; set; }
 
         public void Validate()
         {
-            if (ExternalCustomerId == Guid.Empty)
-                throw new ValidationException("External customer is required.");
+            if (ExternalClientId == Guid.Empty)
+                throw new ValidationException("External client is required.");
 
             if (ProfessionalId == Guid.Empty)
                 throw new UnauthorizedAccessException("User cannot create an appointment without a valid professional ID.");

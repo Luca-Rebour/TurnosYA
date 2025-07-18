@@ -15,7 +15,7 @@ namespace Aplication.Interfaces.Repository
         public Task<Professional> GetByIdAsync(Guid id);
         public void UpdateAvailabilityAsync(Guid professionalId, List<AvailabilitySlot> slots);
         public Task<Professional> GetByMailAsync(string mail);
-        public Task<int> GetActiveClients(Guid professionalId);
+        public Task<int> GetActiveclients(Guid professionalId);
         public Task DeleteAsync(Guid id);
     }
 }
