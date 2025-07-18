@@ -7,20 +7,20 @@ namespace Application.UseCases.User
 {
     public class ValidateUserEmail: IValidateUserEmail
     {
-        private readonly ICustomerRepository _customerRepo;
+        private readonly IClientRepository _clientRepo;
         private readonly IProfessionalRepository _professionalRepo;
 
-        public ValidateUserEmail(ICustomerRepository customerRepo, IProfessionalRepository professionalRepo)
+        public ValidateUserEmail(IClientRepository clientRepo, IProfessionalRepository professionalRepo)
         {
-            _customerRepo = customerRepo;
+            _clientRepo = clientRepo;
             _professionalRepo = professionalRepo;
         }
 
         public async Task<bool> ExecuteAsync(string email)
         {
-            Customer customer = await _customerRepo.GetByMailAsync(email);
+            Client client = await _clientRepo.GetByMailAsync(email);
             Professional professional = await _professionalRepo.GetByMailAsync(email);
-            return customer != null || professional != null;
+            return client != null || professional != null;
         }
     }
 }

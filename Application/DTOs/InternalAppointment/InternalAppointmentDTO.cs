@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Customer;
+﻿using Application.DTOs.Client;
 using Application.DTOs.Professional;
 using Domain.Enums;
 using System;
@@ -17,7 +17,7 @@ namespace Application.DTOs.Appointment
         public string Status { get; set; }
         public string? CancelledBy { get; set; }
 
-        public CustomerShortDTO Customer { get; set; }
+        public ClientShortDTO Client { get; set; }
         public ProfessionalShortDTO Professional { get; set; }
     }
 

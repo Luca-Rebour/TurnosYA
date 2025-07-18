@@ -12,7 +12,7 @@ namespace Domain.Entities
     {
         public Professional():base() { }
 
-        public override IEnumerable<Customer> GetCustomers()
+        public override IEnumerable<Client> GetClients()
         {
             throw new NotImplementedException();
         }

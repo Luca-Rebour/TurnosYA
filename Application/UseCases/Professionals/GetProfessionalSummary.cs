@@ -31,7 +31,7 @@ namespace Application.UseCases.Professionals
         {
             IEnumerable<InternalAppointment> internalAppointents = await _internalAppointmentRepository.GetThisWeekInternalAppointmentsByIdAsync(professionalId);
             IEnumerable<ExternalAppointment> externalAppointments = await _externalAppointmentRepository.GetThisWeekExternalAppointmentsByIdAsync(professionalId);
-            int activeClients = await _professionalRepository.GetActiveClients(professionalId);
+            int activeclients = await _professionalRepository.GetActiveclients(professionalId);
 
             int todayAppointments = internalAppointents.Where(a => a.Date == DateTime.Now).Count();
             todayAppointments += externalAppointments.Where(a => a.Date == DateTime.Now).Count();
@@ -42,7 +42,7 @@ namespace Application.UseCases.Professionals
             int pendingConfirmations = internalAppointents.Where(a => a.Status == 0).Count();
             pendingConfirmations +=externalAppointments.Where(a => a.Status == 0).Count();
 
-            SummaryDataDTO ret = new SummaryDataDTO(todayAppointments, thisWeekAppointments, activeClients, pendingConfirmations);
+            SummaryDataDTO ret = new SummaryDataDTO(todayAppointments, thisWeekAppointments, activeclients, pendingConfirmations);
             return ret;
 
         }

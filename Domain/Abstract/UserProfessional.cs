@@ -11,7 +11,7 @@ namespace Domain.Abstract
     {
         public ICollection<ExternalAppointment> ExternalAppointments { get; private set; }
         public ICollection<AvailabilitySlot> Availability { get; private set; }
-        public abstract IEnumerable<Customer> GetCustomers();
+        public abstract IEnumerable<Client> GetClients();
         public abstract IEnumerable<AvailabilitySlot> GetAvailability();
         public virtual void AddAvailabilitySlot(AvailabilitySlot slot)
         {

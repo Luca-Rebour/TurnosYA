@@ -9,15 +9,15 @@ namespace Application.DTOs.Appointment
 {
     public class CreateInternalAppointmentDTO
     {
-        public Guid CustomerId { get; set; }
+        public Guid ClientId { get; set; }
         public Guid ProfessionalId { get; set; }
         public DateTime Date { get; set; }
         public int DurationMinutes { get; set; }
 
         public void Validate()
         {
-            if (CustomerId == Guid.Empty)
-                throw new ValidationException("Customer is required.");
+            if (ClientId == Guid.Empty)
+                throw new ValidationException("Client is required.");
 
             if (ProfessionalId == Guid.Empty)
                 throw new UnauthorizedAccessException("User cannot create an appointment without a valid professional ID.");

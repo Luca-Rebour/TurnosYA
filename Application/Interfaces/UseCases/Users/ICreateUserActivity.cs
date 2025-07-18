@@ -9,6 +9,6 @@ namespace Application.Interfaces.Users
 {
     public interface ICreateUserActivity
     {
-        Task ExecuteAsync(Guid appointmentId, Guid customerId, Guid professionalId, ActivityType type, string description);
+        Task ExecuteAsync(Guid appointmentId, Guid clientId, Guid professionalId, ActivityType type, string description);
     }
 }
