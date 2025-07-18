@@ -4,25 +4,34 @@ using Application.DTOs.Availibility;
 using Application.DTOs.Professional;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases.AvailabilitySlots;
+using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/availability")]
+    [Route("api/availabilities")]
     public class AvailabilitySlotController : Controller
     {
       
         private readonly ICreateAvailabilitySlot _createAvailabilitySlot;
         private readonly IUpdateAvailabilitySlot _updateAvailabilitySlot;
+        private readonly IGetAllAvailabilitySlots _getAllAvailabilitieSlots;
+        private readonly IGetAllAvailabilitySlotsByProfessionalAndDay _getAllAvailabilitieSlotsByProfessionalAndDay;
 
         public AvailabilitySlotController(
             ICreateAvailabilitySlot createAvailabilitySlot, 
-            IUpdateAvailabilitySlot updateAvailabilitySlot)
+            IUpdateAvailabilitySlot updateAvailabilitySlot,
+            IGetAllAvailabilitySlots getAllAvailabilitieSlots,
+            IGetAllAvailabilitySlotsByProfessionalAndDay getAllAvailabilitieSlotsByProfessionalAndDay)
         {
             _createAvailabilitySlot = createAvailabilitySlot;
             _updateAvailabilitySlot = updateAvailabilitySlot;
+            _getAllAvailabilitieSlots = getAllAvailabilitieSlots;
+            _getAllAvailabilitieSlotsByProfessionalAndDay = getAllAvailabilitieSlotsByProfessionalAndDay;
         }
 
         [HttpPost]
@@ -37,6 +46,14 @@ namespace Api.Controllers
         {
             ProfessionalDTO professionalDTO = await _updateAvailabilitySlot.ExecuteAsync(id, updateAvailabilitySlot);
             return Ok(professionalDTO);
+        }
+
+        [HttpGet("{professionalId}/{date}")]
+        [Authorize]
+        public async Task<IActionResult> GetAll(Guid professionalId, DateTime date)
+        {
+            IEnumerable<AvailabilitySlot> availabilitySlotsDto = await _getAllAvailabilitieSlotsByProfessionalAndDay.Execute(professionalId, date);
+            return Ok(availabilitySlotsDto);
         }
     }
 }

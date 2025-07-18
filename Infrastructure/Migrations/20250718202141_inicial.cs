@@ -106,6 +106,7 @@ namespace Infrastructure.Migrations
                     DayOfWeek = table.Column<int>(type: "int", nullable: false),
                     StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProfessionalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SlotStatus = table.Column<int>(type: "int", nullable: false)
                 },

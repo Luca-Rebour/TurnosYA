@@ -141,6 +141,9 @@ builder.Services.AddScoped<IUpdateInternalAppointment, UpdateInternalAppointment
 builder.Services.AddScoped<ICreateAvailabilitySlot, CreateAvailabilitySlot>();
 builder.Services.AddScoped<IDeleteAvailabilitySlot, DeleteAvailabilitySlot>();
 builder.Services.AddScoped<IUpdateAvailabilitySlot, UpdateAvailabilitySlot>();
+builder.Services.AddScoped<IGetAllAvailabilitySlots, GetAllAvailabilitySlots>();
+builder.Services.AddScoped<IGetAllAvailabilitySlotsByProfessionalAndDay, GetAllAvailabilitySlotsByProfessionalAndDay>();
+
 
 // Inyeccion de dependencias de UseCases de Clients
 builder.Services.AddScoped<ICreateClient, CreateClient>();

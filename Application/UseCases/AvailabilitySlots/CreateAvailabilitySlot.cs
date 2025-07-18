@@ -5,6 +5,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.UseCases.AvailabilitySlots;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,45 @@ namespace Application.UseCases.AvailabilitySlots
         public async Task<ProfessionalDTO> ExecuteAsync(CreateAvailabilitySlotDTO dto)
         {
             dto.Validate();
+
             Professional professional = await _professionalRepository.GetByIdAsync(dto.ProfessionalId);
-            AvailabilitySlot newSlot = _mapper.Map<AvailabilitySlot>(dto);
-            newSlot.SetProfessional(professional);
-            await _repository.AddAsync(newSlot);
+
+            var slotDuration = TimeSpan.FromMinutes(30);
+            var currentDate = dto.StartDate;
+
+            // Avanzar hasta el proximo dia coincidente con dto.DayOfWeek
+            while (currentDate.DayOfWeek != dto.DayOfWeek)
+                currentDate = currentDate.AddDays(1);
+
+            var slots = new List<AvailabilitySlot>();
+
+            for (int week = 0; week < dto.Weeks; week++)
+            {
+                var targetDate = currentDate.AddDays(week * 7);
+                var currentTime = dto.StartTime;
+
+                while (currentTime + slotDuration <= dto.EndTime)
+                {
+                    var slot = new AvailabilitySlot(
+                        date: targetDate.Date,
+                        dayOfWeek: dto.DayOfWeek,
+                        startTime: currentTime,
+                        endTime: currentTime + slotDuration,
+                        availabilityStatus: AvailabilityStatus.Available
+                    );
+
+                    slot.SetProfessional(professional);
+                    slots.Add(slot);
+
+                    currentTime += slotDuration;
+                }
+            }
+
+            await _repository.AddRangeAsync(slots);
+
             return _mapper.Map<ProfessionalDTO>(professional);
         }
+
+
     }
 }

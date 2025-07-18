@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [Route("api/client")]
+    [Route("api/clients")]
     [ApiController]
     public class ClientController : Controller
     {

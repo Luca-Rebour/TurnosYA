@@ -19,7 +19,7 @@ namespace Domain.Entities
             
         }
 
-        public void SetClient(Client client)
+        public void SetInternalClient(Client client)
         {
             ClientId = client.Id;
             Client = client;

@@ -11,10 +11,14 @@ namespace Aplication.Interfaces.Repository
 {
     public interface IAvailabilitySlotRepository
     {
-            public Task<AvailabilitySlot> AddAsync(AvailabilitySlot newSlot);
-            public Task<AvailabilitySlot> UpdateAsync(Guid id, AvailabilitySlot updatedSlot);
-            public Task<AvailabilitySlot?> GetByIdAsync(Guid id);
-            public Task DeleteAsync(Guid id);
+            Task<AvailabilitySlot> AddAsync(AvailabilitySlot newSlot);
+            Task<IEnumerable<AvailabilitySlot>> GetAllAsync(Guid professionalId);
+            Task<AvailabilitySlot> UpdateAsync(Guid id, AvailabilitySlot updatedSlot);
+            Task<AvailabilitySlot?> GetByIdAsync(Guid id);
+            Task DeleteAsync(Guid id);
+            Task AddRangeAsync(IEnumerable<AvailabilitySlot> slots);
+            Task<AvailabilitySlot?> GetAvailableSlotAsync(Guid professionalId, DayOfWeek day, TimeSpan time);
+            Task<IEnumerable<AvailabilitySlot>> GetByDateAsync(Guid professionalId, DateTime date);
 
     }
 }

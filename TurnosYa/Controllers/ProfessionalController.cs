@@ -67,7 +67,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("mine")]
+        [HttpGet("appointments")]
         [Authorize(Roles = "professional")]
         public async Task<IActionResult> GetMyAppointments()
         {
@@ -81,7 +81,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("my-clients")]
+        [HttpGet("clients")]
         [Authorize]
         public async Task<IActionResult> GetMyClients()
         {

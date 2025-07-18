@@ -61,7 +61,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("user-external-appointments")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetUserExternalAppointments()
         {   

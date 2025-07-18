@@ -27,9 +27,6 @@ namespace Application.DTOs.Appointment
             if (Date == default)
                 throw new ValidationException("Appointment date is required.");
 
-            if (Date < DateTime.UtcNow)
-                throw new ValidationException("Appointment date must be in the future.");
-
             if (DurationMinutes <= 0)
                 throw new ValidationException("Duration must be greater than zero.");
 

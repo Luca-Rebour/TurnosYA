@@ -59,7 +59,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("user-internal-appointments")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetUserAppointments()
         {   

@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Client;
 using Application.DTOs.ExternalClient;
+using Application.DTOs.ExternalClients;
 using Application.Exceptions;
 using Application.Interfaces.UseCases.Clients;
 using Application.Interfaces.UseCases.ExternalClients;
@@ -38,53 +39,41 @@ namespace Api.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateExternalClientDTO createExternalClientDTO)
         {
-            Console.WriteLine("📦 Datos recibidos:");
-            Console.WriteLine($"Name: {createExternalClientDTO.Name}");
-            Console.WriteLine($"LastName: {createExternalClientDTO.LastName}");
-            Console.WriteLine($"Phone: {createExternalClientDTO.Phone}");
-            Console.WriteLine($"Email: {createExternalClientDTO.Email}");
-            Console.WriteLine($"CreatedByProfessionalId: {createExternalClientDTO.CreatedByProfessionalId}");
             var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrWhiteSpace(claimValue) || !Guid.TryParse(claimValue, out Guid professionalId))
             {
-                Console.WriteLine("❌ No se pudo obtener un GUID válido desde el token.");
                 return Unauthorized("Invalid or missing user ID in token.");
             }
-            Console.WriteLine($"PROFESSIONAL ID: {claimValue}");
             createExternalClientDTO.CreatedByProfessionalId = professionalId;
             ExternalClient ret = await _createExternalClient.Execute(createExternalClientDTO);
             return Ok(ret);
         }
 
-        [HttpGet("by-email")]
+        [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetByEmail(string email)
+        public async Task<IActionResult> GetByFilter([FromQuery] ExternalClientFilterDTO filter)
         {
                 Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                ExternalClient ret = await _getExternalClientByEmail.Execute(email, professionalId);
-                return Ok(ret);
-        
-        }
 
-        [HttpGet("by-phone")]
-        [Authorize]
-        public async Task<IActionResult> GetByPhone(string phone)
-        {
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                return Ok(await _getExternalClientByEmail.Execute(filter.Email, professionalId));
+            }
 
-                Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                ExternalClient ret = await _getExternalClientByPhone.Execute(phone, professionalId);
-                return Ok(ret);
-        }
+            if (!string.IsNullOrEmpty(filter.Phone))
+            {
+                return Ok(await _getExternalClientByPhone.Execute(filter.Phone, professionalId));
+            }
 
-        [HttpGet("by-professional")]
-        [Authorize]
-        public async Task<IActionResult> GetByProfessionalId()
-        {
-                Guid professionalId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                IEnumerable<ExternalClient> ret = await _getExternalClientsByProfessionalId.Execute(professionalId);
-                return Ok(ret);
+            if (filter.ProfessionalId.HasValue)
+            {
+                return Ok(await _getExternalClientsByProfessionalId.Execute(filter.ProfessionalId.Value));
+            }
+
+            return BadRequest("Debe especificar al menos un filtro.");
 
         }
+
     }
 }
