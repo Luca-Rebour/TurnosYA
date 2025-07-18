@@ -12,15 +12,15 @@ namespace Application.UseCases.Appointments
     public class CreateAppointment: ICreateAppointment
     {
         private IAppointmentRepository _repository;
-        private ICustomerRepository _customerRepository;
+        private IClientRepository _clientRepository;
         private IProfessionalRepository _professionalRepository;
         private ICreateUserActivity _createUserActivity;
         private IMapper _mapper;
-        public CreateAppointment(IAppointmentRepository repository, IMapper mapper, ICustomerRepository customerRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
+        public CreateAppointment(IAppointmentRepository repository, IMapper mapper, IClientRepository clientRepository, IProfessionalRepository professionalRepository, ICreateUserActivity createUserActivity)
         {
             _repository = repository;
             _mapper = mapper;
-            _customerRepository = customerRepository;
+            _clientRepository = clientRepository;
             _professionalRepository = professionalRepository;
             _createUserActivity = createUserActivity;
         }
@@ -29,15 +29,15 @@ namespace Application.UseCases.Appointments
         {
             Appointment appointment = _mapper.Map<Appointment>(appointmentDTO);
 
-            Customer customer = await _customerRepository.GetByIdAsync(appointmentDTO.CustomerId);
+            Client client = await _clientRepository.GetByIdAsync(appointmentDTO.ClientId);
             Professional professional = await _professionalRepository.GetByIdAsync(appointmentDTO.ProfessionalId);
 
-            appointment.SetCustomer(customer);
+            appointment.SetClient(client);
             appointment.SetProfessional(professional);
 
             await _repository.AddAsync(appointment);
 
-            await _createUserActivity.ExecuteAsync(appointment.Id, customer.Id, professional.Id, ActivityType.AppointmentCreated, $"Customer {customer.Name} {customer.LastName} booked an appointment for {appointment.Date:dd/MM/yyyy HH:mm}.");
+            await _createUserActivity.ExecuteAsync(appointment.Id, client.Id, professional.Id, ActivityType.AppointmentCreated, $"Client {client.Name} {client.LastName} booked an appointment for {appointment.Date:dd/MM/yyyy HH:mm}.");
 
             return _mapper.Map<AppointmentDTO>(appointment);
         }

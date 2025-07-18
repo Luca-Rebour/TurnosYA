@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Customer;
+﻿using Application.DTOs.Client;
 using Application.Interfaces.Repository;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +40,7 @@ namespace Infrastructure.Repository
         public async Task<Appointment> GetByIdAsync(Guid id)
         {
             return await _context.Appointments
-                .Include(a => a.Customer)
+                .Include(a => a.Client)
                 .Include(a => a.Professional)
                 .FirstOrDefaultAsync(a => a.Id.Equals(id));
         }
@@ -61,7 +61,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<Appointment>> GetAppointmentsByProfessionalId(Guid professionalId)
         {
             IEnumerable<Appointment> appointments = await _context.Appointments
-                .Include(a => a.Customer)
+                .Include(a => a.Client)
                 .Include(a => a.Professional)
                 .Where(a => a.ProfessionalId == professionalId)
                 .ToListAsync();
@@ -70,15 +70,15 @@ namespace Infrastructure.Repository
         }
 
 
-        public async Task<IEnumerable<Customer>> GetCustomersByProfessionalId(Guid professionalId)
+        public async Task<IEnumerable<Client>> GetClientsByProfessionalId(Guid professionalId)
         {
-            IEnumerable<Customer> customers = await _context.Appointments
+            IEnumerable<Client> clients = await _context.Appointments
                 .Where(a => a.ProfessionalId == professionalId)
-                .Select(a => a.Customer)
+                .Select(a => a.Client)
                 .Distinct()
                 .ToListAsync();
 
-            return customers;
+            return clients;
 
 
         }
@@ -87,7 +87,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<Appointment>> GetPendingAppointmentsByUserIdAsync(Guid id)
         {
             return await _context.Appointments
-                .Where(a => (a.ProfessionalId == id || a.CustomerId == id) && a.Status == 0)
+                .Where(a => (a.ProfessionalId == id || a.ClientId == id) && a.Status == 0)
                 .ToListAsync();
 
         }

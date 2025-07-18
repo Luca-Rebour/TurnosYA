@@ -27,9 +27,9 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<UserActivity>> GetAllAsync(Guid userId)
         {
             IEnumerable<UserActivity> activities = await _context.UserActivities
-                .Include(a => a.Customer)
+                .Include(a => a.Client)
                 .Include(a => a.Professional)
-                .Where(a => a.CustomerId == userId || a.ProfessionalId == userId)
+                .Where(a => a.ClientId == userId || a.ProfessionalId == userId)
                 .OrderByDescending(a => a.CreatedAt)
                 .ToListAsync();
 

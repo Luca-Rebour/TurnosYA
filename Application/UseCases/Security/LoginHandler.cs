@@ -14,32 +14,32 @@ namespace Application.UseCases.Security
 {
     public class LoginHandler: ILoginHandler
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly ITokenGenerator _tokenGenerator;
 
-        public LoginHandler(ICustomerRepository customerRepository, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, IProfessionalRepository professionalRepository)
+        public LoginHandler(IClientRepository clientRepository, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, IProfessionalRepository professionalRepository)
         {
             _passwordHasher = passwordHasher;
             _tokenGenerator = tokenGenerator;
-            _customerRepository = customerRepository;
+            _clientRepository = clientRepository;
             _professionalRepository = professionalRepository;
         }
 
         public async Task<LoginResponseDTO> ExecuteAsync(string email, string password)
         {
-            Customer? customer = await _customerRepository.GetByMailAsync(email);
-            if (customer != null)
+            Client? client = await _clientRepository.GetByMailAsync(email);
+            if (client != null)
             {
-                if (!_passwordHasher.Verify(password, customer.PasswordHash))
+                if (!_passwordHasher.Verify(password, client.PasswordHash))
                     throw new UnauthorizedAccessException("Invalid credentials.");
 
                 return new LoginResponseDTO
                 {
-                    Role = "Customer",
-                    UserId = customer.Id,
-                    Token = _tokenGenerator.GenerateToken(customer.Id.ToString(), customer.Name, "Customer")
+                    Role = "Client",
+                    UserId = client.Id,
+                    Token = _tokenGenerator.GenerateToken(client.Id.ToString(), client.Name, "Client")
                 };
             }
 

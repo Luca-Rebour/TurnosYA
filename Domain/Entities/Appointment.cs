@@ -10,8 +10,8 @@ namespace Domain.Entities
     public class Appointment
     {
         public Guid Id { get; private set; }
-        public Guid CustomerId { get; private set; }
-        public Customer Customer { get; private set; }
+        public Guid ClientId { get; private set; }
+        public Client Client { get; private set; }
         public Guid ProfessionalId { get; private set; }
         public Professional Professional { get; private set; }
         public DateTime Date { get; private set; }
@@ -33,9 +33,9 @@ namespace Domain.Entities
                 Status = other.Status;
         }
 
-        public void SetCustomer(Customer customer)
+        public void SetClient(Client client)
         {
-            Customer = customer;
+            Client = client;
         }
 
         public void SetProfessional(Professional professional)

@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Appointment;
-using Application.DTOs.Customer;
+using Application.DTOs.Client;
 using Application.DTOs.Professional;
 using Application.Exceptions;
 using Application.Interfaces.UseCases.Appointments;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Api.Controllers
 {
-    [Route("api/professional")]
+    [Route("api/professionals")]
     [ApiController]
     public class ProfessionalController : Controller
     {
@@ -18,7 +18,7 @@ namespace Api.Controllers
         private readonly IGetProfessionalById _getProfessionalById;
         private readonly IUpdateProfessional _updateProfessional;
         private readonly IGetAppointmentsByProfessionalId _getAppointmentsByProfessionalId;
-        private readonly IGetProfessionalCustomers _getProfessionalCustomers;
+        private readonly IGetProfessionalClients _getProfessionalClients;
 
 
         public ProfessionalController(
@@ -26,14 +26,14 @@ namespace Api.Controllers
             IGetProfessionalById getProfessionalById,
             IUpdateProfessional updateProfessional,
             IGetAppointmentsByProfessionalId getAppointmentsByProfessionalId,
-            IGetProfessionalCustomers getProfessionalCustomers
+            IGetProfessionalClients getProfessionalClients
             )
         {
             _createProfessional = createProfessional;
             _getProfessionalById = getProfessionalById;
             _updateProfessional = updateProfessional;
             _getAppointmentsByProfessionalId = getAppointmentsByProfessionalId;
-            _getProfessionalCustomers = getProfessionalCustomers;
+            _getProfessionalClients = getProfessionalClients;
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("mine")]
+        [HttpGet("appointments")]
         [Authorize(Roles = "professional")]
         public async Task<IActionResult> GetMyAppointments()
         {
@@ -78,17 +78,17 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("mycustomers")]
+        [HttpGet("clients")]
         [Authorize(Roles = "professional")]
-        public async Task<IActionResult> GetMyCustomers()
+        public async Task<IActionResult> GetMyClients()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            IEnumerable<CustomerShortDTO> customers = await _getProfessionalCustomers.ExecuteAsync(Guid.Parse(userId));
+            IEnumerable<ClientShortDTO> clients = await _getProfessionalClients.ExecuteAsync(Guid.Parse(userId));
 
-            return Ok(customers);
+            return Ok(clients);
         }
 
 

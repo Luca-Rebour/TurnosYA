@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj": {}
+    "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
+    "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj"
+              "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj"
               }
             }
           }
@@ -71,18 +71,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
+    "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -132,18 +132,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -161,11 +161,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj"
+              "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj"
               },
-              "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj"
+              "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Domain\\Domain.csproj"
               }
             }
           }
@@ -226,18 +226,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj": {
+    "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj",
+        "projectUniqueName": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj",
         "projectName": "Api",
-        "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj",
+        "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\TurnosYa\\Api.csproj",
         "packagesPath": "C:\\Users\\lucar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\TurnosYa\\obj\\",
+        "outputPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\TurnosYa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -255,11 +255,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Application\\Application.csproj"
+              "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Application\\Application.csproj"
               },
-              "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\lucar\\Desktop\\Trabajos\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\lucar\\Escritorio\\Angular\\TurnosYA\\TurnosYA\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -329,7 +329,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

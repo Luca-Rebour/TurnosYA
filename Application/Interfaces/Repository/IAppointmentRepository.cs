@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Customer;
+﻿using Application.DTOs.Client;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Application.Interfaces.Repository
         Task<Appointment> UpdateAsync(Guid id, Appointment updatedAppointment);
         Task<Appointment> GetByIdAsync(Guid id);
         Task<IEnumerable<Appointment>> GetAppointmentsByProfessionalId(Guid professionalId);
-        Task<IEnumerable<Customer>> GetCustomersByProfessionalId(Guid professionalId);
+        Task<IEnumerable<Client>> GetClientsByProfessionalId(Guid professionalId);
         Task<IEnumerable<Appointment>> GetPendingAppointmentsByUserIdAsync(Guid id);
         Task SaveChangesAsync();
         Task DeleteAsync(Guid id);

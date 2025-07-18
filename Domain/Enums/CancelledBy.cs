@@ -8,7 +8,7 @@ namespace Domain.Enums
 {
     public enum CancelledBy
     {
-        Customer = 0,
+        Client = 0,
         Professional = 1
     }
 }

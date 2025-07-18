@@ -70,7 +70,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CanceledBy")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
@@ -87,7 +87,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("ProfessionalId");
 
@@ -122,6 +122,32 @@ namespace Infrastructure.Migrations
                     b.ToTable("AvailabilitySlots");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ExternalClient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedByProfessionalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByProfessionalId");
+
+                    b.ToTable("ExternalClients");
+                });
+
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -154,11 +180,11 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -174,18 +200,18 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("AppointmentId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("ProfessionalId");
 
                     b.ToTable("UserActivities");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Customer", b =>
+            modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.HasBaseType("Domain.Abstract.User");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Professional", b =>
@@ -197,9 +223,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("Domain.Entities.Customer", "Customer")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany("Appointments")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -209,7 +235,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Client");
 
                     b.Navigation("Professional");
                 });
@@ -223,6 +249,16 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Professional");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ExternalClient", b =>
+                {
+                    b.HasOne("Domain.Entities.Professional", "CreatedByProfessional")
+                        .WithMany()
+                        .HasForeignKey("CreatedByProfessionalId")
+                        .IsRequired();
+
+                    b.Navigation("CreatedByProfessional");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -244,9 +280,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Customer", "Customer")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -258,16 +294,16 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Appointment");
 
-                    b.Navigation("Customer");
+                    b.Navigation("Client");
 
                     b.Navigation("Professional");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Customer", b =>
+            modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.HasOne("Domain.Abstract.User", null)
                         .WithOne()
-                        .HasForeignKey("Domain.Entities.Customer", "Id")
+                        .HasForeignKey("Domain.Entities.Client", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -286,7 +322,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("Notifications");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Customer", b =>
+            modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.Navigation("Appointments");
                 });

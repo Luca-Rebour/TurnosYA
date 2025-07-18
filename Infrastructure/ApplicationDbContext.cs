@@ -14,12 +14,12 @@ namespace Infrastructure
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Professional> Professionals { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AvailabilitySlot> AvailabilitySlots { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
-        public DbSet<ExternalCustomer> ExternalCustomers { get; set; }
+        public DbSet<ExternalClient> ExternalClients { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
@@ -30,18 +30,18 @@ namespace Infrastructure
             modelBuilder.Entity<User>().UseTptMappingStrategy();
 
             modelBuilder.Entity<Professional>().ToTable("Professionals");
-            modelBuilder.Entity<Customer>().ToTable("Customers");
+            modelBuilder.Entity<Client>().ToTable("Clients");
 
             modelBuilder.Entity<Appointment>().HasKey(a => a.Id);
             modelBuilder.Entity<AvailabilitySlot>().HasKey(a => a.Id);
             modelBuilder.Entity<Notification>().HasKey(a => a.Id);
             modelBuilder.Entity<UserActivity>().HasKey(a => a.Id);
-            modelBuilder.Entity<ExternalCustomer>().HasKey(a => a.Id);
+            modelBuilder.Entity<ExternalClient>().HasKey(a => a.Id);
 
             modelBuilder.Entity<Appointment>()
-                .HasOne(a => a.Customer)
+                .HasOne(a => a.Client)
                 .WithMany(c => c.Appointments)
-                .HasForeignKey(a => a.CustomerId)
+                .HasForeignKey(a => a.ClientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Appointment>()
@@ -57,9 +57,9 @@ namespace Infrastructure
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserActivity>()
-            .HasOne(a => a.Customer)
+            .HasOne(a => a.Client)
             .WithMany()
-            .HasForeignKey(a => a.CustomerId)
+            .HasForeignKey(a => a.ClientId)
             .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserActivity>()
@@ -74,7 +74,7 @@ namespace Infrastructure
                 .HasForeignKey(a => a.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ExternalCustomer>()
+            modelBuilder.Entity<ExternalClient>()
                 .HasOne(a => a.CreatedByProfessional)
                 .WithMany()
                 .HasForeignKey(a => a.CreatedByProfessionalId)

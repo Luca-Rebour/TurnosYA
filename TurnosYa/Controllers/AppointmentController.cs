@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/appointment")]
+    [Route("api/appointments")]
     public class AppointmentController : ControllerBase
     {
         private readonly ICreateAppointment _createAppointment;
@@ -59,7 +59,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("userAppointments")]
+        [HttpGet("mine")]
         [Authorize]
         public async Task<IActionResult> GetUserAppointments()
         {   

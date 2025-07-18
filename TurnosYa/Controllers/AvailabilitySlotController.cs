@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/availability")]
+    [Route("api/availabilities")]
     public class AvailabilitySlotController : Controller
     {
       
