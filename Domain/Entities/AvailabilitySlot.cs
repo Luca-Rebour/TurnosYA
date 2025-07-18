@@ -13,12 +13,22 @@ namespace Domain.Entities
         public DayOfWeek DayOfWeek { get; private set; }
         public TimeSpan StartTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
+        public DateTime Date { get; set; } 
         public Guid ProfessionalId { get; private set; }
         public Professional Professional { get; private set; }
         public AvailabilityStatus SlotStatus { get; private set; }
         public AvailabilitySlot() 
         { 
             Id = Guid.NewGuid();
+        }
+
+        public AvailabilitySlot(DateTime date, DayOfWeek dayOfWeek, TimeSpan startTime, TimeSpan endTime, AvailabilityStatus availabilityStatus)
+        {
+            DayOfWeek = dayOfWeek;
+            StartTime = startTime;
+            EndTime = endTime;
+            SlotStatus = availabilityStatus;
+            Date = date;
         }
         public void MarkAsUnavailable() => SlotStatus = AvailabilityStatus.Booked;
 

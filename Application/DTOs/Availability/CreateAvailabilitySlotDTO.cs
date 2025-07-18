@@ -13,7 +13,8 @@ namespace Application.DTOs.Availability
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public Guid ProfessionalId { get; set; }
-
+        public int Weeks { get; set; }
+        public DateTime StartDate { get; set; }
         public void Validate()
         {
             if (ProfessionalId == Guid.Empty)

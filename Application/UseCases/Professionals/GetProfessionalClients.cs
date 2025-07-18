@@ -27,14 +27,18 @@ namespace Application.UseCases.Professionals
         }
         public async Task<IEnumerable<ClientShortDTO>> ExecuteAsync(Guid professionalId)
         {
-            var clients = await _internalAppointmentRepository.GetClientsByProfessionalId(professionalId);
-            var externalClients = await _externalAppointmentRepository.GetClientsByProfessionalId(professionalId);
+            IEnumerable<Client> internalClients = await _internalAppointmentRepository.GetClientsByProfessionalId(professionalId);
+            IEnumerable<ExternalClient> externalClients = await _externalAppointmentRepository.GetClientsByProfessionalId(professionalId);
 
-            var clientDTOs = _mapper.Map<IEnumerable<ClientShortDTO>>(clients);
-            var externalClientDTOs = _mapper.Map<IEnumerable<ClientShortDTO>>(externalClients);
+            List<ClientShortDTO> internalClientDTOs = _mapper.Map<List<ClientShortDTO>>(internalClients);
+            List<ClientShortDTO> externalClientDTOs = _mapper.Map<List<ClientShortDTO>>(externalClients);
 
-            return clientDTOs.Concat(externalClientDTOs);
+            internalClientDTOs.ForEach(c => c.ClientType = "Internal");
+            externalClientDTOs.ForEach(c => c.ClientType = "External");
+
+            return internalClientDTOs.Concat(externalClientDTOs);
         }
+
 
     }
 }

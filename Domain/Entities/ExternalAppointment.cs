@@ -18,7 +18,7 @@ namespace Domain.Entities
 
         }
 
-        public void SetClient(ExternalClient externalClient)
+        public void SetExternalClient(ExternalClient externalClient)
         {
             ExternalClientId = externalClient.Id;
             ExternalClient = externalClient;
